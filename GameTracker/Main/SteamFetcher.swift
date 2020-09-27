@@ -16,14 +16,36 @@ protocol SteamFetchable {
 class SteamFetcher {
     private let session: URLSession
     
+    private lazy var key: String = {
+        do {
+            let data = try String(contentsOfFile: "/Users/mac/Desktop/SteamInfo.txt", encoding: .utf8)
+            let myStrings = data.components(separatedBy: .newlines)
+            return myStrings[0]
+        } catch {
+            print(error)
+        }
+        return ""
+    }()
+    
+    private lazy var steamId: String = {
+        do {
+            let data = try String(contentsOfFile: "/Users/mac/Desktop/SteamInfo.txt", encoding: .utf8)
+            let myStrings = data.components(separatedBy: .newlines)
+            return myStrings[1]
+        } catch {
+            print(error)
+        }
+        return ""
+    }()
+    
     struct SteamWebAPI {
         static let scheme = "https"
         static let host = "api.steampowered.com"
         static let path = "/IPlayerService"
         // Your Steam Key
-        static let key = ""
+//        static let key = ""
         // Your Steam Id
-        static let steamId = ""
+//        static let steamId = ""
     }
     
     init(session: URLSession = .shared) {
@@ -37,8 +59,8 @@ class SteamFetcher {
         components.path = SteamWebAPI.path + "/GetOwnedGames/v1/"
         
         components.queryItems = [
-            URLQueryItem(name: "key", value: SteamWebAPI.key),
-            URLQueryItem(name: "steamid", value: SteamWebAPI.steamId),
+            URLQueryItem(name: "key", value: key),
+            URLQueryItem(name: "steamid", value: steamId),
             URLQueryItem(name: "include_appinfo", value: "1"),
             URLQueryItem(name: "include_played_free_games", value: "1")
         ]
