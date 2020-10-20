@@ -11,6 +11,7 @@ import Combine
 
 protocol SteamFetchable {
     func getOwnedGames() -> AnyPublisher<GetOwnedGamesResponse, SteamError>
+    func getRecentlyPlayedGames() -> AnyPublisher<GetRecentlyPlayedGamesResponse, SteamError>
 }
 
 class SteamFetcher {
@@ -18,7 +19,7 @@ class SteamFetcher {
     
     private lazy var key: String = {
         do {
-            let data = try String(contentsOfFile: "/Users/mac/Desktop/SteamInfo.txt", encoding: .utf8)
+            let data = try String(contentsOfFile: "/Users/michaelslattery/Desktop/SteamInfo.txt", encoding: .utf8)
             let myStrings = data.components(separatedBy: .newlines)
             return myStrings[0]
         } catch {
@@ -29,7 +30,7 @@ class SteamFetcher {
     
     private lazy var steamId: String = {
         do {
-            let data = try String(contentsOfFile: "/Users/mac/Desktop/SteamInfo.txt", encoding: .utf8)
+            let data = try String(contentsOfFile: "/Users/michaelslattery/Desktop/SteamInfo.txt", encoding: .utf8)
             let myStrings = data.components(separatedBy: .newlines)
             return myStrings[1]
         } catch {
@@ -42,10 +43,6 @@ class SteamFetcher {
         static let scheme = "https"
         static let host = "api.steampowered.com"
         static let path = "/IPlayerService"
-        // Your Steam Key
-//        static let key = ""
-        // Your Steam Id
-//        static let steamId = ""
     }
     
     init(session: URLSession = .shared) {
@@ -53,16 +50,35 @@ class SteamFetcher {
     }
     
     func makeGetOwnedGamesComponents() -> URLComponents {
+        var components = makeBaseURLComponents(path: "/GetOwnedGames/v1/")
+        
+        components.queryItems?.append(contentsOf: [
+            URLQueryItem(name: "include_appinfo", value: "1"),
+            URLQueryItem(name: "include_played_free_games", value: "1")
+        ])
+        
+        return components
+    }
+    
+    func makeGetRecentlyPlayedGamesComponents() -> URLComponents {
+        var components = makeBaseURLComponents(path: "/GetRecentlyPlayedGames/v1/")
+        
+        components.queryItems?.append(contentsOf: [
+            URLQueryItem(name: "count", value: "3")
+        ])
+        
+        return components
+    }
+    
+    private func makeBaseURLComponents(path: String) -> URLComponents {
         var components = URLComponents()
         components.scheme = SteamWebAPI.scheme
         components.host = SteamWebAPI.host
-        components.path = SteamWebAPI.path + "/GetOwnedGames/v1/"
+        components.path = SteamWebAPI.path + path
         
         components.queryItems = [
             URLQueryItem(name: "key", value: key),
-            URLQueryItem(name: "steamid", value: steamId),
-            URLQueryItem(name: "include_appinfo", value: "1"),
-            URLQueryItem(name: "include_played_free_games", value: "1")
+            URLQueryItem(name: "steamid", value: steamId)
         ]
         
         return components
@@ -85,6 +101,10 @@ class SteamFetcher {
 extension SteamFetcher: SteamFetchable {
     func getOwnedGames() -> AnyPublisher<GetOwnedGamesResponse, SteamError> {
         return fetchData(with: makeGetOwnedGamesComponents())
+    }
+    
+    func getRecentlyPlayedGames() -> AnyPublisher<GetRecentlyPlayedGamesResponse, SteamError> {
+        return fetchData(with: makeGetRecentlyPlayedGamesComponents())
     }
     
     private func fetchData<T>(with components: URLComponents) -> AnyPublisher<T, SteamError> where T: Decodable {

@@ -20,6 +20,7 @@ struct OwnedGames: Codable {
 struct Game: Codable {
     let appid: Int
     let name: String
+    let playtime2weeks: Int?
     let playtimeForever: Int
     let imgIconUrl: String
     let imgLogoUrl: String

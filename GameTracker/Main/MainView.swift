@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 private let buttonSize: CGFloat = 48.0
 private let buttonCornerRadius: CGFloat = 25.0
@@ -69,7 +70,7 @@ struct GameCellView: View {
      
     var body: some View {
         Button(action: {
-            print("Access Game")
+            print(gameCell.name)
         }) {
             HStack {
                 Text(gameCell.name)
@@ -77,7 +78,7 @@ struct GameCellView: View {
                 Text(gameCell.hoursPlayed)
             }
         }
-        .background(Image(gameCell.background))
+        .background(WebImage(url: URL(string: gameCell.background)).resizable().indicator(.activity).scaledToFill())
         .frame(maxWidth: .infinity, alignment: .center)
         .padding()
     }

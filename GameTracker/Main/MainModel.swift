@@ -15,6 +15,6 @@ struct MainModel {
         var id: Int
         var name: String
         var hoursPlayed: String
-        var background: String = "gamecontroller.fill"
+        var background: String
     }
 }

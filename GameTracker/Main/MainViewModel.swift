@@ -15,7 +15,9 @@ class MainViewModel: ObservableObject, Identifiable {
     private(set) var mainModel: MainModel = MainModel(username: "Test")
     
     @Published
-    var games: [MainModel.GameCell] = []
+    var recentGames: [MainModel.GameCell] = []
+    
+    var allGames: [MainModel.GameCell] = []
     
     private let steamFetcher: SteamFetchable
     private var disposables = Set<AnyCancellable>()
@@ -23,23 +25,20 @@ class MainViewModel: ObservableObject, Identifiable {
     init(steamFetcher: SteamFetchable, scheduler: DispatchQueue = DispatchQueue(label: "MainViewModel")) {
         self.steamFetcher = steamFetcher
         
-        fetchGames()
+        fetchAllGames()
+        fetchRecentGames()
     }
     
     func mostRecent() -> Array<MainModel.GameCell> {
-        return games
-//        var games = Array<MainModel.GameCell>()
-//        for index in 0...2 {
-//            games.append(MainModel.GameCell(id: index))
-//        }
-//        return games
+        return recentGames
     }
     
-    func fetchGames() {
+    func fetchAllGames() {
         steamFetcher.getOwnedGames()
             .map { response in
                 response.response.games.map {
-                    MainModel.GameCell.init(id: $0.appid, name: $0.name, hoursPlayed: "\($0.playtimeForever)")
+                    MainModel.GameCell.init(id: $0.appid, name: $0.name,
+                                            hoursPlayed: self.minutesToHoursAndMinutes($0.playtimeForever), background: $0.imgLogoUrl)
                 }
             }
             .receive(on: DispatchQueue.main)
@@ -47,14 +46,45 @@ class MainViewModel: ObservableObject, Identifiable {
                 guard let self = self else { return }
                 switch value {
                 case .failure:
-                  self.games = []
+                  self.allGames = []
                 case .finished:
                   break
                 }
             }, receiveValue: { [weak self] forecast in
                 guard let self = self else { return }
-                self.games = forecast
+                self.allGames = forecast
             })
             .store(in: &disposables)
+    }
+    
+    func fetchRecentGames() {
+        steamFetcher.getRecentlyPlayedGames()
+            .map { response in
+                response.response.games.map {
+                    MainModel.GameCell.init(id: $0.appid, name: $0.name,
+                                            hoursPlayed: self.minutesToHoursAndMinutes($0.playtimeForever),
+                                            background: "https://steamcdn-a.akamaihd.net/steam/apps/\($0.appid)/library_hero.jpg")
+                }
+            }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] value in
+                guard let self = self else { return }
+                switch value {
+                case .failure:
+                  self.recentGames = []
+                case .finished:
+                  break
+                }
+            }, receiveValue: { [weak self] forecast in
+                guard let self = self else { return }
+                self.recentGames = forecast
+            })
+            .store(in: &disposables)
+    }
+    
+    private func minutesToHoursAndMinutes(_ onlyMinutes: Int) -> String {
+        let hours = onlyMinutes / 60
+        let minutes = onlyMinutes % 60
+        return "\(hours):\(minutes)"
     }
 }
