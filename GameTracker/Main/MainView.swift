@@ -18,6 +18,8 @@ struct MainView: View {
     @ObservedObject
     var mainViewModel: MainViewModel
     
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    
     var body: some View {
         VStack {
             Text("Hello, \(mainViewModel.mainModel.username)!")
@@ -33,9 +35,13 @@ struct MainView: View {
                 })
                 Spacer()
             }
-            VStack {
-                ForEach(mainViewModel.mostRecent()) { gameCell in
+            VStack(spacing: 0) {
+                if verticalSizeClass == .compact, let gameCell = mainViewModel.mostRecent().first {
                     GameCellView(gameCell: gameCell)
+                } else {
+                    ForEach(mainViewModel.mostRecent()) { gameCell in
+                        GameCellView(gameCell: gameCell)
+                    }
                 }
             }
             .frame(maxHeight: .infinity, alignment: .bottomLeading)
@@ -72,15 +78,11 @@ struct GameCellView: View {
         Button(action: {
             print(gameCell.name)
         }) {
-            HStack {
-                Text(gameCell.name)
-                Spacer()
-                Text(gameCell.hoursPlayed)
-            }
+            WebImage(url: URL(string: gameCell.background))
+                .resizable()
+                .indicator(.activity)
+                .scaledToFit()
         }
-        .background(WebImage(url: URL(string: gameCell.background)).resizable().indicator(.activity).scaledToFill())
-        .frame(maxWidth: .infinity, alignment: .center)
-        .padding()
     }
 }
 
