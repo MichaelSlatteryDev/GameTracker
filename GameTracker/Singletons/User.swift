@@ -28,4 +28,11 @@ class User {
         self.lastName = lastName
         self.steamId = steamId
     }
+    
+    func cleareUserInfo() {
+        self.username = ""
+        self.firstName = ""
+        self.lastName = ""
+        self.steamId = ""
+    }
 }

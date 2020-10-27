@@ -34,13 +34,7 @@ struct SafariView: UIViewControllerRepresentable {
     let handler: SteamLoginVCHandler
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<SafariView>) -> SteamLoginVC {
-        return SteamLoginVC.init { (user, error) in
-            if let user = user {
-                print(user.steamID64)
-            } else {
-                print(error)
-            }
-        }
+        return SteamLoginVC.init(loginHandler: handler)
     }
 
     func updateUIViewController(_ uiViewController: SteamLoginVC, context: UIViewControllerRepresentableContext<SafariView>) {
@@ -51,6 +45,6 @@ struct SafariView: UIViewControllerRepresentable {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(loginViewModel: LoginViewModel())
+        LoginView(loginViewModel: LoginViewModel(steamFetcher: SteamFetcher()))
     }
 }
