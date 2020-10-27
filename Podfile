@@ -8,6 +8,7 @@ target 'GameTracker' do
   # Pods for GameTracker
 
   pod 'SDWebImageSwiftUI'
+  pod 'SteamLogin'
 
   target 'GameTrackerTests' do
     inherit! :search_paths

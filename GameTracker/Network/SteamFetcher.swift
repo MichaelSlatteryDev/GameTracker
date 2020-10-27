@@ -42,7 +42,6 @@ class SteamFetcher {
     struct SteamWebAPI {
         static let scheme = "https"
         static let host = "api.steampowered.com"
-        static let path = "/IPlayerService"
     }
     
     init(session: URLSession = .shared) {
@@ -50,9 +49,10 @@ class SteamFetcher {
     }
     
     func makeGetOwnedGamesComponents() -> URLComponents {
-        var components = makeBaseURLComponents(path: "/GetOwnedGames/v1/")
+        var components = makeBaseURLComponents(path: "/IPlayerService/GetOwnedGames/v1/")
         
         components.queryItems?.append(contentsOf: [
+            URLQueryItem(name: "steamid", value: steamId),
             URLQueryItem(name: "include_appinfo", value: "1"),
             URLQueryItem(name: "include_played_free_games", value: "1")
         ])
@@ -61,11 +61,22 @@ class SteamFetcher {
     }
     
     func makeGetRecentlyPlayedGamesComponents() -> URLComponents {
-        var components = makeBaseURLComponents(path: "/GetRecentlyPlayedGames/v1/")
+        var components = makeBaseURLComponents(path: "/IPlayerService/GetRecentlyPlayedGames/v1/")
         
         components.queryItems?.append(contentsOf: [
+            URLQueryItem(name: "steamid", value: steamId),
             URLQueryItem(name: "count", value: "3")
         ])
+        
+        return components
+    }
+    
+    func makeGetPlayerSummariesCompnents() -> URLComponents {
+        var components = makeBaseURLComponents(path: "/ISteamUser/GetPlayerSummaries/v2/")
+        
+//        components.queryItems?.append(contentsOf: [
+//            URLQueryItem
+//        ])
         
         return components
     }
@@ -74,11 +85,10 @@ class SteamFetcher {
         var components = URLComponents()
         components.scheme = SteamWebAPI.scheme
         components.host = SteamWebAPI.host
-        components.path = SteamWebAPI.path + path
+        components.path = path
         
         components.queryItems = [
-            URLQueryItem(name: "key", value: key),
-            URLQueryItem(name: "steamid", value: steamId)
+            URLQueryItem(name: "key", value: key)
         ]
         
         return components

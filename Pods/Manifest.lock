@@ -4,19 +4,25 @@ PODS:
   - SDWebImage/Core (5.9.3)
   - SDWebImageSwiftUI (1.5.0):
     - SDWebImage (~> 5.7)
+  - SteamLogin (0.1.4):
+    - SteamLogin/Login (= 0.1.4)
+  - SteamLogin/Login (0.1.4)
 
 DEPENDENCIES:
   - SDWebImageSwiftUI
+  - SteamLogin
 
 SPEC REPOS:
   trunk:
     - SDWebImage
     - SDWebImageSwiftUI
+    - SteamLogin
 
 SPEC CHECKSUMS:
   SDWebImage: a31ee8e90a97303529e03fb0c333eae0eacb88e9
   SDWebImageSwiftUI: 43687ffe232ddd33fe0659498b7ca9884fdd6b35
+  SteamLogin: 86eee7733cfaa417242671524f39561b0c22700c
 
-PODFILE CHECKSUM: efeaf17ca9ac00b199f5a19da0ceb4b8f3d65218
+PODFILE CHECKSUM: 4887b2f000fa276955cebd114f5b0fe71b647f53
 
 COCOAPODS: 1.9.3
