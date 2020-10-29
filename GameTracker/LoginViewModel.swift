@@ -15,11 +15,14 @@ class LoginViewModel: ObservableObject, Identifiable {
     private let steamFetcher: SteamFetchable
     private var disposables = Set<AnyCancellable>()
     
+    @Published
+    var successfulLogin: Bool = false
+    
     lazy var handler: SteamLoginVCHandler = { [weak self] user, error in
-        if let user = user, let steamId = user.steamID64 {
-            self?.getPlayerSummary(steamId: steamId)
+        if let self = self, let user = user, let steamId = user.steamID64 {
+            self.getPlayerSummary(steamId: steamId)
         } else {
-            print(error)
+            print("ERROR: \(error)")
         }
     }
     
@@ -41,9 +44,10 @@ class LoginViewModel: ObservableObject, Identifiable {
                 case .finished:
                   break
                 }
-            }, receiveValue: { players in
-                guard let player = players.first else { return }
+            }, receiveValue: { [weak self] players in
+                guard let self = self, let player = players.first else { return }
                 User.shared.updateUserInfo(username: player.personaname, firstName: "", lastName: "", steamId: steamId)
+                self.successfulLogin = true
             })
             .store(in: &disposables)
     }

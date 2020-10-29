@@ -22,7 +22,7 @@ struct MainView: View {
     
     var body: some View {
         VStack {
-            Text("Hello, \(mainViewModel.mainModel.username)!")
+            Text("Hello \(mainViewModel.mainModel.username)!")
             .padding()
             HStack {
                 Spacer()

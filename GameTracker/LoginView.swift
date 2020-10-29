@@ -17,14 +17,18 @@ struct LoginView: View {
     @State var showSafari = false
     
     var body: some View {
-        Button(action: {
-            self.showSafari = true
-        }) {
-            Text("Steam Login")
-        }
-        // summon the Safari sheet
-        .sheet(isPresented: $showSafari) {
-            SafariView(handler: loginViewModel.handler)
+        NavigationView {
+            NavigationLink(destination: MainView(mainViewModel: MainViewModel(steamFetcher: SteamFetcher())),
+                           isActive: $loginViewModel.successfulLogin, label: {
+                Button(action: {
+                    self.showSafari = true
+                }) {
+                    Text("Steam Login")
+                }
+                .sheet(isPresented: $showSafari) {
+                    SafariView(handler: loginViewModel.handler)
+                }
+            })
         }
     }
 }

@@ -12,7 +12,7 @@ import Combine
 class MainViewModel: ObservableObject, Identifiable {
     
     @Published
-    private(set) var mainModel: MainModel = MainModel(username: "Test")
+    private(set) var mainModel: MainModel = MainModel(username: User.shared.username)
     
     @Published
     var recentGames: [MainModel.GameCell] = []
