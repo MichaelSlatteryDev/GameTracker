@@ -12,7 +12,7 @@ import Combine
 class MainViewModel: ObservableObject, Identifiable {
     
     @Published
-    private(set) var mainModel: MainModel = MainModel(username: User.shared.username)
+    private(set) var mainModel: MainModel = MainModel()
     
     @Published
     var recentGames: [MainModel.GameCell] = []
@@ -25,7 +25,7 @@ class MainViewModel: ObservableObject, Identifiable {
     init(steamFetcher: SteamFetchable, scheduler: DispatchQueue = DispatchQueue(label: "MainViewModel")) {
         self.steamFetcher = steamFetcher
         
-        fetchAllGames()
+//        fetchAllGames()
         fetchRecentGames()
     }
     
@@ -78,6 +78,29 @@ class MainViewModel: ObservableObject, Identifiable {
             }, receiveValue: { [weak self] forecast in
                 guard let self = self else { return }
                 self.recentGames = forecast
+            })
+            .store(in: &disposables)
+    }
+    
+    func fetchAchievments(game: MainModel.GameCell) {
+        steamFetcher.getPlayerAchievments(gameId: String(game.id))
+            .map { response in
+                if let index = self.recentGames.firstIndex(where: {$0.name == response.playerstats.gameName}) {
+                    self.recentGames[index].totalAchievements = response.playerstats.achievements.count
+                    self.recentGames[index].completedAchievements = response.playerstats.achievements.map{$0.achieved == 1}.count
+                }
+            }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] value in
+                guard let self = self else { return }
+                switch value {
+                case .failure:
+                  self.recentGames = []
+                case .finished:
+                  break
+                }
+            }, receiveValue: { forecast in
+                print("Success")
             })
             .store(in: &disposables)
     }

@@ -13,12 +13,32 @@ protocol SteamFetchable {
     func getOwnedGames() -> AnyPublisher<GetOwnedGamesResponse, SteamError>
     func getRecentlyPlayedGames() -> AnyPublisher<GetRecentlyPlayedGamesResponse, SteamError>
     func getPlayerSummary(steamId: String) -> AnyPublisher<GetPlayerSummariesResponse, SteamError>
+    func getPlayerAchievments(gameId: String) -> AnyPublisher<GetPlayerAchievementsResponse, SteamError>
+}
+
+enum Endpoints {
+    
+    case getOwnedGames
+    case getRecentlyPlayedGames
+    case getPlayerSummary
+    case getPlayerAchievements
+    case getUserStatsForGame
+    
+    func path() -> String {
+        switch (self) {
+        case .getOwnedGames: return "/IPlayerService/GetOwnedGames/v1/"
+        case .getRecentlyPlayedGames: return "/IPlayerService/GetRecentlyPlayedGames/v1/"
+        case .getPlayerSummary: return "/ISteamUser/GetPlayerSummaries/v2/"
+        case .getPlayerAchievements: return "/ISteamUserStats/GetPlayerAchievements/v0001/"
+        case .getUserStatsForGame: return "/ISteamUserStats/GetUserStatsForGame/v0002/"
+        }
+    }
 }
 
 class SteamFetcher {
     private let session: URLSession
     
-    private lazy var key: String = {
+    private var key: String = {
         do {
             let data = try String(contentsOfFile: "/Users/michaelslattery/Desktop/SteamInfo.txt", encoding: .utf8)
             let myStrings = data.components(separatedBy: .newlines)
@@ -39,7 +59,7 @@ class SteamFetcher {
     }
     
     func makeGetOwnedGamesComponents() -> URLComponents {
-        var components = makeBaseURLComponents(path: "/IPlayerService/GetOwnedGames/v1/")
+        var components = makeBaseURLComponents(path: Endpoints.getOwnedGames.path())
         
         components.queryItems?.append(contentsOf: [
             URLQueryItem(name: "steamid", value: User.shared.steamId),
@@ -51,7 +71,7 @@ class SteamFetcher {
     }
     
     func makeGetRecentlyPlayedGamesComponents() -> URLComponents {
-        var components = makeBaseURLComponents(path: "/IPlayerService/GetRecentlyPlayedGames/v1/")
+        var components = makeBaseURLComponents(path: Endpoints.getRecentlyPlayedGames.path())
         
         components.queryItems?.append(contentsOf: [
             URLQueryItem(name: "steamid", value: User.shared.steamId),
@@ -62,10 +82,21 @@ class SteamFetcher {
     }
     
     func makeGetPlayerSummaryCompnents(steamId: String) -> URLComponents {
-        var components = makeBaseURLComponents(path: "/ISteamUser/GetPlayerSummaries/v2/")
+        var components = makeBaseURLComponents(path: Endpoints.getPlayerSummary.path())
         
         components.queryItems?.append(contentsOf: [
             URLQueryItem(name: "steamids", value: "\([steamId])")
+        ])
+        
+        return components
+    }
+    
+    func makeGetPlayerAchievements(gameId: String) -> URLComponents {
+        var components = makeBaseURLComponents(path: Endpoints.getPlayerAchievements.path())
+        
+        components.queryItems?.append(contentsOf: [
+            URLQueryItem(name: "steamid", value: User.shared.steamId),
+            URLQueryItem(name: "appid", value: gameId)
         ])
         
         return components
@@ -88,6 +119,8 @@ class SteamFetcher {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        print(String(data: data, encoding: .utf8))
 
         return Just(data)
             .decode(type: T.self, decoder: decoder)
@@ -109,6 +142,10 @@ extension SteamFetcher: SteamFetchable {
     
     func getPlayerSummary(steamId: String) -> AnyPublisher<GetPlayerSummariesResponse, SteamError> {
         return fetchData(with: makeGetPlayerSummaryCompnents(steamId: steamId))
+    }
+    
+    func getPlayerAchievments(gameId: String) -> AnyPublisher<GetPlayerAchievementsResponse, SteamError> {
+        return fetchData(with: makeGetPlayerAchievements(gameId: gameId))
     }
     
     private func fetchData<T>(with components: URLComponents) -> AnyPublisher<T, SteamError> where T: Decodable {

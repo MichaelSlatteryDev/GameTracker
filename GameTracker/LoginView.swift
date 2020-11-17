@@ -11,25 +11,25 @@ import SteamLogin
 
 struct LoginView: View {
     
-    @ObservedObject
+    @StateObject
     var loginViewModel: LoginViewModel
     
     @State var showSafari = false
     
     var body: some View {
         NavigationView {
-            NavigationLink(destination: MainView(mainViewModel: MainViewModel(steamFetcher: SteamFetcher())),
-                           isActive: $loginViewModel.successfulLogin, label: {
+            NavigationLink(destination: MainView(mainViewModel: MainViewModel(steamFetcher: SteamFetcher())), isActive: $loginViewModel.successfulLogin) {
                 Button(action: {
                     self.showSafari = true
                 }) {
-                    Text("Steam Login")
+                    Image("steam_login")
                 }
                 .sheet(isPresented: $showSafari) {
                     SafariView(handler: loginViewModel.handler)
                 }
-            })
+            }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

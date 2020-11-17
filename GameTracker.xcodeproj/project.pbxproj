@@ -23,6 +23,7 @@
 		76791B2025479E270007A53C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76791B1F25479E270007A53C /* LoginViewModel.swift */; };
 		76791B2625479EF90007A53C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76791B2525479EF90007A53C /* User.swift */; };
 		76791B2E2547AC3F0007A53C /* GetPlayerSummariesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76791B2D2547AC3F0007A53C /* GetPlayerSummariesResponse.swift */; };
+		76ACBC372562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ACBC362562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift */; };
 		76FEBBFF2540E1DF0062EA67 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FEBBFE2540E1DF0062EA67 /* LoginView.swift */; };
 		76FF416F253F7B5900E2DAE5 /* GetRecentlyPlayedGamesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FF416E253F7B5900E2DAE5 /* GetRecentlyPlayedGamesResponse.swift */; };
 		B835AF441E527F3C1F50BBA3 /* Pods_GameTracker_GameTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97D7A6D4C4998044133F4A1 /* Pods_GameTracker_GameTrackerUITests.framework */; };
@@ -74,6 +75,7 @@
 		76791B1F25479E270007A53C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		76791B2525479EF90007A53C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		76791B2D2547AC3F0007A53C /* GetPlayerSummariesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlayerSummariesResponse.swift; sourceTree = "<group>"; };
+		76ACBC362562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlayerAchievementsResponse.swift; sourceTree = "<group>"; };
 		76FEBBFE2540E1DF0062EA67 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		76FF416E253F7B5900E2DAE5 /* GetRecentlyPlayedGamesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecentlyPlayedGamesResponse.swift; sourceTree = "<group>"; };
 		9DF28D34172A7F7EA4BB825A /* Pods-GameTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameTracker.debug.xcconfig"; path = "Target Support Files/Pods-GameTracker/Pods-GameTracker.debug.xcconfig"; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				04259902250ECFC200F22A77 /* GetOwnedGamesResponse.swift */,
 				76FF416E253F7B5900E2DAE5 /* GetRecentlyPlayedGamesResponse.swift */,
 				76791B2D2547AC3F0007A53C /* GetPlayerSummariesResponse.swift */,
+				76ACBC362562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift */,
 			);
 			path = SteamResponses;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				0436201A24F329C500544C10 /* MainViewModel.swift in Sources */,
 				04259903250ECFC200F22A77 /* GetOwnedGamesResponse.swift in Sources */,
 				76791B2E2547AC3F0007A53C /* GetPlayerSummariesResponse.swift in Sources */,
+				76ACBC372562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift in Sources */,
 				0436201724F3275500544C10 /* MainModel.swift in Sources */,
 				04361FE524F303ED00544C10 /* AppDelegate.swift in Sources */,
 				04361FE724F303ED00544C10 /* SceneDelegate.swift in Sources */,
@@ -606,6 +610,12 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-weak_framework",
+					SwiftUI,
+					"-weak_framework",
+					Combine,
+				);
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -659,6 +669,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-weak_framework",
+					SwiftUI,
+					"-weak_framework",
+					Combine,
+				);
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -673,8 +689,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"GameTracker/Preview Content\"";
+				DEVELOPMENT_TEAM = P2H6L4K6SX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = GameTracker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -693,8 +711,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"GameTracker/Preview Content\"";
+				DEVELOPMENT_TEAM = P2H6L4K6SX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = GameTracker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

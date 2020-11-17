@@ -15,14 +15,15 @@ private let buttonBorderLineWidth: CGFloat = 2.0
 
 struct MainView: View {
     
-    @ObservedObject
+    @StateObject
     var mainViewModel: MainViewModel
     
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
         VStack {
-            Text("Hello \(mainViewModel.mainModel.username)!")
+            Text("Hello \(User.shared.username)!")
             .padding()
             HStack {
                 Spacer()
@@ -78,11 +79,21 @@ struct GameCellView: View {
         Button(action: {
             print(gameCell.name)
         }) {
-            WebImage(url: URL(string: gameCell.background))
-                .resizable()
-                .indicator(.activity)
-                .scaledToFit()
+            VStack {
+                WebImage(url: URL(string: gameCell.background))
+                    .resizable()
+                    .indicator(.activity)
+                    .scaledToFit()
+                HStack {
+                    if let total = gameCell.totalAchievements, let completed = gameCell.completedAchievements {
+                        Text("\(completed)\\\(total)")
+                    } else {
+                        Text("Information not available")
+                    }
+                }
+            }
         }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 

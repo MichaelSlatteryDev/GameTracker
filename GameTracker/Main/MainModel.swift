@@ -9,12 +9,12 @@
 import Foundation
 
 struct MainModel {
-    var username: String
-    
     struct GameCell: Identifiable {
         var id: Int
         var name: String
         var hoursPlayed: String
         var background: String
+        var completedAchievements: Int?
+        var totalAchievements: Int?
     }
 }
