@@ -78,31 +78,35 @@ class MainViewModel: ObservableObject, Identifiable {
             }, receiveValue: { [weak self] forecast in
                 guard let self = self else { return }
                 self.recentGames = forecast
+                self.fetchAchievments(games: forecast)
             })
             .store(in: &disposables)
     }
     
-    func fetchAchievments(game: MainModel.GameCell) {
-        steamFetcher.getPlayerAchievments(gameId: String(game.id))
-            .map { response in
-                if let index = self.recentGames.firstIndex(where: {$0.name == response.playerstats.gameName}) {
-                    self.recentGames[index].totalAchievements = response.playerstats.achievements.count
-                    self.recentGames[index].completedAchievements = response.playerstats.achievements.map{$0.achieved == 1}.count
+    func fetchAchievments(games: [MainModel.GameCell]) {
+        for game in games {
+            steamFetcher.getPlayerAchievments(gameId: String(game.id))
+                .map { response in
+                    if let index = self.recentGames.firstIndex(where: {$0.name == response.playerstats.gameName}) {
+                        DispatchQueue.main.async {
+                            self.recentGames[index].totalAchievements = response.playerstats.achievements.count
+                            self.recentGames[index].completedAchievements = response.playerstats.achievements.filter{$0.achieved == 1}.count
+                        }
+                    }
                 }
-            }
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] value in
-                guard let self = self else { return }
-                switch value {
-                case .failure:
-                  self.recentGames = []
-                case .finished:
-                  break
-                }
-            }, receiveValue: { forecast in
-                print("Success")
-            })
-            .store(in: &disposables)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { value in
+                    switch value {
+                    case .failure:
+                        print("Game has no achievements")
+                    case .finished:
+                      break
+                    }
+                }, receiveValue: { forecast in
+                    print("Success")
+                })
+                .store(in: &disposables)
+        }
     }
     
     private func minutesToHoursAndMinutes(_ onlyMinutes: Int) -> String {

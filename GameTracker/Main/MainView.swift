@@ -22,30 +22,33 @@ struct MainView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        VStack {
-            Text("Hello \(User.shared.username)!")
-            .padding()
-            HStack {
-                Spacer()
-                GameTrackerButton(image: "gamecontroller.fill", action: {
-                    print("Access Library")
-                })
-                Spacer()
-                GameTrackerButton(image: "gamecontroller.fill", action: {
-                    print("Access Settings")
-                })
-                Spacer()
-            }
-            VStack(spacing: 0) {
-                if verticalSizeClass == .compact, let gameCell = mainViewModel.mostRecent().first {
-                    GameCellView(gameCell: gameCell)
-                } else {
-                    ForEach(mainViewModel.mostRecent()) { gameCell in
+        BaseView {
+            VStack {
+                Text("Hello \(User.shared.username)!")
+                    .foregroundColor(.white)
+                .padding()
+                HStack {
+                    Spacer()
+                    GameTrackerButton(image: "gamecontroller.fill", action: {
+                        print("Access Library")
+                    })
+                    Spacer()
+                    GameTrackerButton(image: "gearshape.fill", action: {
+                        print("Access Settings")
+                    })
+                    Spacer()
+                }
+                VStack(spacing: 0) {
+                    if verticalSizeClass == .compact, let gameCell = mainViewModel.mostRecent().first {
                         GameCellView(gameCell: gameCell)
+                    } else {
+                        ForEach(mainViewModel.mostRecent()) { gameCell in
+                            GameCellView(gameCell: gameCell)
+                        }
                     }
                 }
+                .frame(maxHeight: .infinity, alignment: .bottomLeading)
             }
-            .frame(maxHeight: .infinity, alignment: .bottomLeading)
         }
     }
 }
@@ -66,7 +69,7 @@ struct GameTrackerButton: View {
             .padding()
             .overlay(
                 RoundedRectangle(cornerRadius: buttonCornerRadius)
-                .stroke(Color.blue, lineWidth: buttonBorderLineWidth)
+                .stroke(Color.white, lineWidth: buttonBorderLineWidth)
             )
         }
     }
@@ -86,9 +89,12 @@ struct GameCellView: View {
                     .scaledToFit()
                 HStack {
                     if let total = gameCell.totalAchievements, let completed = gameCell.completedAchievements {
-                        Text("\(completed)\\\(total)")
+                        Text("\(gameCell.name):")
+                            .foregroundColor(.white)
+                        ProgressBar(progress: Binding.constant(Float(completed)/Float(total)))
                     } else {
-                        Text("Information not available")
+                        Text("\(gameCell.name) has no achievements")
+                            .foregroundColor(.white)
                     }
                 }
             }
