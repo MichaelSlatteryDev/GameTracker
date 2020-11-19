@@ -91,7 +91,7 @@ struct GameCellView: View {
                     if let total = gameCell.totalAchievements, let completed = gameCell.completedAchievements {
                         Text("\(gameCell.name):")
                             .foregroundColor(.white)
-                        ProgressBar(progress: Binding.constant(Float(completed)/Float(total)))
+//                        ProgressBar(progress: Binding.constant(Float(completed)/Float(total)))
                     } else {
                         Text("\(gameCell.name) has no achievements")
                             .foregroundColor(.white)

@@ -24,12 +24,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        let mainViewModel = MainViewModel(steamFetcher: fetcher)
 //        let contentView = MainView(mainViewModel: mainViewModel)
         
-        let loginView = LoginView(loginViewModel: LoginViewModel(steamFetcher: fetcher))
+        let splashView = SplashView(splashViewModel: SplashViewModel(steamFetcher: fetcher))
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: loginView)
+            window.rootViewController = UIHostingController(rootView: splashView)
             self.window = window
             window.makeKeyAndVisible()
         }

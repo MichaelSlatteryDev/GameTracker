@@ -1,36 +1,36 @@
 //
-//  LoginViewModel.swift
+//  SplashViewModel.swift
 //  GameTracker
 //
-//  Created by Michael Slattery on 10/26/20.
+//  Created by Michael Slattery on 11/19/20.
 //  Copyright © 2020 Michael Slattery. All rights reserved.
 //
 
 import SwiftUI
-import SteamLogin
 import Combine
 import KeychainAccess
 
-class LoginViewModel: ObservableObject, Identifiable {
+class SplashViewModel: ObservableObject, Identifiable {
     
     private let steamFetcher: SteamFetchable
     private var disposables = Set<AnyCancellable>()
     private let keychain = Keychain(service: "com.michaelslattery.GameTracker")
     
     @Published
-    var successfulLogin: Bool = false
+    var savedCredentials: Bool
     
-    lazy var handler: SteamLoginVCHandler = { [weak self] user, error in
-        if let self = self, let user = user, let steamId = user.steamID64 {
-            self.save(steamId: steamId)
-            self.getPlayerSummary(steamId: steamId)
-        } else {
-            print("ERROR: \(error)")
-        }
-    }
+    @Published
+    var successfulLogin: Bool = false
     
     init(steamFetcher: SteamFetchable) {
         self.steamFetcher = steamFetcher
+        
+        if let steamId = keychain["steamId"] {
+            savedCredentials = true
+            getPlayerSummary(steamId: steamId)
+        } else {
+           savedCredentials = false
+        }
     }
     
     func getPlayerSummary(steamId: String) {
@@ -53,9 +53,5 @@ class LoginViewModel: ObservableObject, Identifiable {
                 self.successfulLogin = true
             })
             .store(in: &disposables)
-    }
-    
-    private func save(steamId: String) {
-        keychain["steamId"] = steamId
     }
 }
