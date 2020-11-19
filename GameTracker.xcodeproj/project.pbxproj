@@ -22,6 +22,7 @@
 		0436201A24F329C500544C10 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436201924F329C500544C10 /* MainViewModel.swift */; };
 		760F4F222566BF1700158E02 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760F4F212566BF1700158E02 /* SplashView.swift */; };
 		760F4F2D2566BFDA00158E02 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760F4F2C2566BFDA00158E02 /* SplashViewModel.swift */; };
+		760F4F322566DE5600158E02 /* StrokeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760F4F312566DE5600158E02 /* StrokeText.swift */; };
 		76661A90256406BC000EDD25 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76661A8F256406BC000EDD25 /* BaseView.swift */; };
 		76661A9825640B6F000EDD25 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76661A9725640B6F000EDD25 /* ProgressBar.swift */; };
 		76791B2025479E270007A53C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76791B1F25479E270007A53C /* LoginViewModel.swift */; };
@@ -78,6 +79,7 @@
 		7302EFDC8C51661CBB2C29E1 /* Pods_GameTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GameTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		760F4F212566BF1700158E02 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		760F4F2C2566BFDA00158E02 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		760F4F312566DE5600158E02 /* StrokeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeText.swift; sourceTree = "<group>"; };
 		76661A8F256406BC000EDD25 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		76661A9725640B6F000EDD25 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		76791B1F25479E270007A53C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			children = (
 				76661A8F256406BC000EDD25 /* BaseView.swift */,
 				76661A9725640B6F000EDD25 /* ProgressBar.swift */,
+				760F4F312566DE5600158E02 /* StrokeText.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				760F4F322566DE5600158E02 /* StrokeText.swift in Sources */,
 				76FF416F253F7B5900E2DAE5 /* GetRecentlyPlayedGamesResponse.swift in Sources */,
 				04259900250ECEF700F22A77 /* SteamFetcher.swift in Sources */,
 				760F4F222566BF1700158E02 /* SplashView.swift in Sources */,

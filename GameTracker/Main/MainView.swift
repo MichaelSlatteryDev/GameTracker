@@ -83,19 +83,31 @@ struct GameCellView: View {
             print(gameCell.name)
         }) {
             VStack {
-                WebImage(url: URL(string: gameCell.background))
-                    .resizable()
-                    .indicator(.activity)
-                    .scaledToFit()
-                HStack {
-                    if let total = gameCell.totalAchievements, let completed = gameCell.completedAchievements {
-                        Text("\(gameCell.name):")
-                            .foregroundColor(.white)
-//                        ProgressBar(progress: Binding.constant(Float(completed)/Float(total)))
-                    } else {
-                        Text("\(gameCell.name) has no achievements")
-                            .foregroundColor(.white)
-                    }
+                if let total = gameCell.totalAchievements, let completed = gameCell.completedAchievements {
+                    WebImage(url: URL(string: gameCell.background))
+                        .resizable()
+                        .indicator(.activity)
+                        .overlay(
+                            GeometryReader { geometry in
+                                VStack(alignment: .leading) {
+                                    StrokeText(text: "\(gameCell.name)")
+                                    StrokeText(text: "Progress: \(completed)\\\(total)")
+                                }
+                            }
+                        )
+                        .scaledToFit()
+                } else {
+                    WebImage(url: URL(string: gameCell.background))
+                        .resizable()
+                        .indicator(.activity)
+                        .overlay(
+                            GeometryReader { geometry in
+                                VStack(alignment: .leading) {
+                                    StrokeText(text: "\(gameCell.name) has no achievements")
+                                }
+                            }
+                        )
+                        .scaledToFit()
                 }
             }
         }
