@@ -17,15 +17,12 @@ class MainViewModel: ObservableObject, Identifiable {
     @Published
     var recentGames: [MainModel.GameCell] = []
     
-    var allGames: [MainModel.GameCell] = []
-    
     private let steamFetcher: SteamFetchable
     private var disposables = Set<AnyCancellable>()
     
     init(steamFetcher: SteamFetchable, scheduler: DispatchQueue = DispatchQueue(label: "MainViewModel")) {
         self.steamFetcher = steamFetcher
         
-//        fetchAllGames()
         fetchRecentGames()
     }
     
@@ -33,36 +30,12 @@ class MainViewModel: ObservableObject, Identifiable {
         return recentGames
     }
     
-    func fetchAllGames() {
-        steamFetcher.getOwnedGames()
-            .map { response in
-                response.response.games.map {
-                    MainModel.GameCell.init(id: $0.appid, name: $0.name,
-                                            hoursPlayed: self.minutesToHoursAndMinutes($0.playtimeForever), background: $0.imgLogoUrl)
-                }
-            }
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] value in
-                guard let self = self else { return }
-                switch value {
-                case .failure:
-                  self.allGames = []
-                case .finished:
-                  break
-                }
-            }, receiveValue: { [weak self] forecast in
-                guard let self = self else { return }
-                self.allGames = forecast
-            })
-            .store(in: &disposables)
-    }
-    
     func fetchRecentGames() {
         steamFetcher.getRecentlyPlayedGames()
             .map { response in
                 response.response.games.map {
                     MainModel.GameCell.init(id: $0.appid, name: $0.name,
-                                            hoursPlayed: self.minutesToHoursAndMinutes($0.playtimeForever),
+                                            hoursPlayed: $0.playtimeForever.toHoursAndMinutes(),
                                             background: "https://steamcdn-a.akamaihd.net/steam/apps/\($0.appid)/library_hero.jpg")
                 }
             }
@@ -107,11 +80,5 @@ class MainViewModel: ObservableObject, Identifiable {
                 })
                 .store(in: &disposables)
         }
-    }
-    
-    private func minutesToHoursAndMinutes(_ onlyMinutes: Int) -> String {
-        let hours = onlyMinutes / 60
-        let minutes = onlyMinutes % 60
-        return "\(hours):\(minutes)"
     }
 }

@@ -9,6 +9,11 @@
 import Foundation
 
 struct MainModel {
+    enum GameCellView {
+        case main
+        case games
+    }
+    
     struct GameCell: Identifiable {
         var id: Int
         var name: String

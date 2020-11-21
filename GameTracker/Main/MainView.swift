@@ -18,38 +18,46 @@ struct MainView: View {
     @StateObject
     var mainViewModel: MainViewModel
     
+    @State var showAllGames = false
+    
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        BaseView {
-            VStack {
-                Text("Hello \(User.shared.username)!")
-                    .foregroundColor(.white)
-                .padding()
-                HStack {
-                    Spacer()
-                    GameTrackerButton(image: "gamecontroller.fill", action: {
-                        print("Access Library")
-                    })
-                    Spacer()
-                    GameTrackerButton(image: "gearshape.fill", action: {
-                        print("Access Settings")
-                    })
-                    Spacer()
-                }
-                VStack(spacing: 0) {
-                    if verticalSizeClass == .compact, let gameCell = mainViewModel.mostRecent().first {
-                        GameCellView(gameCell: gameCell)
-                    } else {
-                        ForEach(mainViewModel.mostRecent()) { gameCell in
-                            GameCellView(gameCell: gameCell)
+        NavigationView {
+            BaseView {
+                VStack {
+                    Text("Hello \(User.shared.username)!")
+                        .foregroundColor(.white)
+                    .padding()
+                    HStack {
+                        Spacer()
+                        NavigationLink(destination: GamesView(gamesViewModel: GamesViewModel(steamFetcher: SteamFetcher())), isActive: $showAllGames) {
+                            GameTrackerButton(image: "gamecontroller.fill", action: {
+                                print("Access Library")
+                                showAllGames = true
+                            })
+                        }
+                        Spacer()
+                        GameTrackerButton(image: "gearshape.fill", action: {
+                            print("Access Settings")
+                        })
+                        Spacer()
+                    }
+                    VStack(spacing: 0) {
+                        if verticalSizeClass == .compact, let gameCell = mainViewModel.mostRecent().first {
+                            GameCell(cellData: gameCell, view: .main)
+                        } else {
+                            ForEach(mainViewModel.mostRecent()) { gameCell in
+                                GameCell(cellData: gameCell, view: .main)
+                            }
                         }
                     }
+                    .frame(maxHeight: .infinity, alignment: .bottomLeading)
                 }
-                .frame(maxHeight: .infinity, alignment: .bottomLeading)
             }
         }
+        .navigationBarHidden(true)
     }
 }
 
@@ -75,35 +83,62 @@ struct GameTrackerButton: View {
     }
 }
 
-struct GameCellView: View {
-    var gameCell: MainModel.GameCell
+struct GameCell: View {
+    var cellData: MainModel.GameCell
+    var view: MainModel.GameCellView
      
     var body: some View {
+        switch (view) {
+        case .main: GameCellLandscape(cellData: cellData)
+        case .games: GameCellPortrait(cellData: cellData)
+        }
+    }
+}
+
+struct GameCellPortrait: View {
+    var cellData: MainModel.GameCell
+    
+    var body: some View {
+        WebImage(url: URL(string: cellData.background))
+            .onFailure(perform: { error in
+                print(error)
+            })
+            .resizable()
+            .indicator(.activity)
+            .frame(width: 100, height: 150, alignment: .center)
+//            .scaledToFit()
+    }
+}
+
+struct GameCellLandscape: View {
+    var cellData: MainModel.GameCell
+    
+    var body: some View {
         Button(action: {
-            print(gameCell.name)
+            print(cellData.name)
         }) {
             VStack {
-                if let total = gameCell.totalAchievements, let completed = gameCell.completedAchievements {
-                    WebImage(url: URL(string: gameCell.background))
+                if let total = cellData.totalAchievements, let completed = cellData.completedAchievements {
+                    WebImage(url: URL(string: cellData.background))
                         .resizable()
                         .indicator(.activity)
                         .overlay(
                             GeometryReader { geometry in
                                 VStack(alignment: .leading) {
-                                    StrokeText(text: "\(gameCell.name)")
+                                    StrokeText(text: "\(cellData.name)")
                                     StrokeText(text: "Progress: \(completed)\\\(total)")
                                 }
                             }
                         )
                         .scaledToFit()
                 } else {
-                    WebImage(url: URL(string: gameCell.background))
+                    WebImage(url: URL(string: cellData.background))
                         .resizable()
                         .indicator(.activity)
                         .overlay(
                             GeometryReader { geometry in
                                 VStack(alignment: .leading) {
-                                    StrokeText(text: "\(gameCell.name) has no achievements")
+                                    StrokeText(text: "\(cellData.name) has no achievements")
                                 }
                             }
                         )

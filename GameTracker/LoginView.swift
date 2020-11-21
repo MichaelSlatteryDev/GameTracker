@@ -30,7 +30,9 @@ struct LoginView: View {
                     }
                 }
             }
-        }.accentColor(.white)
+        }
+        .accentColor(.white)
+        .navigationBarHidden(true)
     }
 }
 
