@@ -1,5 +1,5 @@
 //
-//  SteamError.swift
+//  NetworkError    .swift
 //  GameTracker
 //
 //  Created by Michael Slattery on 9/13/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SteamError: Error {
+enum NetworkError: Error {
     case parsing(description: String)
-    case network(description: String)
+    case url(description: String)
 }

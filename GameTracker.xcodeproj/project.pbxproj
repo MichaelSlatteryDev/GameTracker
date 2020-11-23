@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		04259900250ECEF700F22A77 /* SteamFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042598FF250ECEF700F22A77 /* SteamFetcher.swift */; };
 		04259903250ECFC200F22A77 /* GetOwnedGamesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04259902250ECFC200F22A77 /* GetOwnedGamesResponse.swift */; };
-		04259906250ED5E100F22A77 /* SteamError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04259905250ED5E100F22A77 /* SteamError.swift */; };
+		04259906250ED5E100F22A77 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04259905250ED5E100F22A77 /* NetworkError.swift */; };
 		04361FE524F303ED00544C10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04361FE424F303ED00544C10 /* AppDelegate.swift */; };
 		04361FE724F303ED00544C10 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04361FE624F303ED00544C10 /* SceneDelegate.swift */; };
 		04361FE924F303ED00544C10 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04361FE824F303ED00544C10 /* MainView.swift */; };
@@ -20,6 +20,10 @@
 		0436200724F303EF00544C10 /* GameTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436200624F303EF00544C10 /* GameTrackerUITests.swift */; };
 		0436201724F3275500544C10 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436201624F3275500544C10 /* MainModel.swift */; };
 		0436201A24F329C500544C10 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436201924F329C500544C10 /* MainViewModel.swift */; };
+		76065EFC256C120800D59352 /* IGDBFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76065EFB256C120800D59352 /* IGDBFetcher.swift */; };
+		76065F01256C124100D59352 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76065F00256C124100D59352 /* Endpoints.swift */; };
+		76065F09256C159200D59352 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76065F08256C159200D59352 /* Fetcher.swift */; };
+		76065F13256C228800D59352 /* GetTwitchTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76065F12256C228800D59352 /* GetTwitchTokenResponse.swift */; };
 		760C37B525695BDF002855CF /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C37B425695BDF002855CF /* GamesView.swift */; };
 		760C37BD25696241002855CF /* GamesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C37BC25696241002855CF /* GamesViewModel.swift */; };
 		760C37C3256962FA002855CF /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C37C2256962FA002855CF /* IntExtension.swift */; };
@@ -59,7 +63,7 @@
 /* Begin PBXFileReference section */
 		042598FF250ECEF700F22A77 /* SteamFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamFetcher.swift; sourceTree = "<group>"; };
 		04259902250ECFC200F22A77 /* GetOwnedGamesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOwnedGamesResponse.swift; sourceTree = "<group>"; };
-		04259905250ED5E100F22A77 /* SteamError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SteamError.swift; sourceTree = "<group>"; };
+		04259905250ED5E100F22A77 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		04361FE124F303ED00544C10 /* GameTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04361FE424F303ED00544C10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04361FE624F303ED00544C10 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +84,10 @@
 		4BBFFFA23A1F1DD96935808D /* Pods-GameTracker-GameTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameTracker-GameTrackerUITests.release.xcconfig"; path = "Target Support Files/Pods-GameTracker-GameTrackerUITests/Pods-GameTracker-GameTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		58129E8AE5119B51AED57C8D /* Pods-GameTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GameTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-GameTrackerTests/Pods-GameTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7302EFDC8C51661CBB2C29E1 /* Pods_GameTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GameTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76065EFB256C120800D59352 /* IGDBFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGDBFetcher.swift; sourceTree = "<group>"; };
+		76065F00256C124100D59352 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
+		76065F08256C159200D59352 /* Fetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
+		76065F12256C228800D59352 /* GetTwitchTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTwitchTokenResponse.swift; sourceTree = "<group>"; };
 		760C37B425695BDF002855CF /* GamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesView.swift; sourceTree = "<group>"; };
 		760C37BC25696241002855CF /* GamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewModel.swift; sourceTree = "<group>"; };
 		760C37C2256962FA002855CF /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
@@ -129,21 +137,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		04259901250ECFA000F22A77 /* SteamResponses */ = {
+		04259901250ECFA000F22A77 /* Responses */ = {
 			isa = PBXGroup;
 			children = (
-				04259902250ECFC200F22A77 /* GetOwnedGamesResponse.swift */,
-				76FF416E253F7B5900E2DAE5 /* GetRecentlyPlayedGamesResponse.swift */,
-				76791B2D2547AC3F0007A53C /* GetPlayerSummariesResponse.swift */,
-				76ACBC362562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift */,
+				76065F11256C226E00D59352 /* IGDBResponses */,
+				76065F0D256C225B00D59352 /* SteamResponses */,
 			);
-			path = SteamResponses;
+			path = Responses;
 			sourceTree = "<group>";
 		};
 		04259904250ED5CC00F22A77 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				04259905250ED5E100F22A77 /* SteamError.swift */,
+				04259905250ED5E100F22A77 /* NetworkError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -181,7 +187,7 @@
 				76FEBC0F2540E33E0062EA67 /* Network */,
 				76FEBBFD2540E1CE0062EA67 /* Login */,
 				04259904250ED5CC00F22A77 /* Errors */,
-				04259901250ECFA000F22A77 /* SteamResponses */,
+				04259901250ECFA000F22A77 /* Responses */,
 				0436201824F3279300544C10 /* Main */,
 				04361FE424F303ED00544C10 /* AppDelegate.swift */,
 				04361FE624F303ED00544C10 /* SceneDelegate.swift */,
@@ -242,6 +248,25 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		76065F0D256C225B00D59352 /* SteamResponses */ = {
+			isa = PBXGroup;
+			children = (
+				04259902250ECFC200F22A77 /* GetOwnedGamesResponse.swift */,
+				76FF416E253F7B5900E2DAE5 /* GetRecentlyPlayedGamesResponse.swift */,
+				76791B2D2547AC3F0007A53C /* GetPlayerSummariesResponse.swift */,
+				76ACBC362562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift */,
+			);
+			path = SteamResponses;
+			sourceTree = "<group>";
+		};
+		76065F11256C226E00D59352 /* IGDBResponses */ = {
+			isa = PBXGroup;
+			children = (
+				76065F12256C228800D59352 /* GetTwitchTokenResponse.swift */,
+			);
+			path = IGDBResponses;
+			sourceTree = "<group>";
+		};
 		760C37B325695BCE002855CF /* Games */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +324,9 @@
 			isa = PBXGroup;
 			children = (
 				042598FF250ECEF700F22A77 /* SteamFetcher.swift */,
+				76065EFB256C120800D59352 /* IGDBFetcher.swift */,
+				76065F00256C124100D59352 /* Endpoints.swift */,
+				76065F08256C159200D59352 /* Fetcher.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -560,12 +588,15 @@
 				760C37C3256962FA002855CF /* IntExtension.swift in Sources */,
 				760F4F2D2566BFDA00158E02 /* SplashViewModel.swift in Sources */,
 				76791B2025479E270007A53C /* LoginViewModel.swift in Sources */,
+				76065F09256C159200D59352 /* Fetcher.swift in Sources */,
 				0436201A24F329C500544C10 /* MainViewModel.swift in Sources */,
+				76065EFC256C120800D59352 /* IGDBFetcher.swift in Sources */,
 				04259903250ECFC200F22A77 /* GetOwnedGamesResponse.swift in Sources */,
 				76791B2E2547AC3F0007A53C /* GetPlayerSummariesResponse.swift in Sources */,
 				76661A9825640B6F000EDD25 /* ProgressBar.swift in Sources */,
 				76ACBC372562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift in Sources */,
 				0436201724F3275500544C10 /* MainModel.swift in Sources */,
+				76065F13256C228800D59352 /* GetTwitchTokenResponse.swift in Sources */,
 				04361FE524F303ED00544C10 /* AppDelegate.swift in Sources */,
 				04361FE724F303ED00544C10 /* SceneDelegate.swift in Sources */,
 				76791B2625479EF90007A53C /* User.swift in Sources */,
@@ -573,7 +604,8 @@
 				760C37BD25696241002855CF /* GamesViewModel.swift in Sources */,
 				76661A90256406BC000EDD25 /* BaseView.swift in Sources */,
 				76FEBBFF2540E1DF0062EA67 /* LoginView.swift in Sources */,
-				04259906250ED5E100F22A77 /* SteamError.swift in Sources */,
+				76065F01256C124100D59352 /* Endpoints.swift in Sources */,
+				04259906250ED5E100F22A77 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
