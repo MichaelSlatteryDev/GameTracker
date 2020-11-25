@@ -15,12 +15,15 @@ class GamesViewModel: ObservableObject, Identifiable {
     var allGames: [MainModel.GameCell] = []
     
     private let steamFetcher: SteamFetchable
+    private let igdbFetcher: IGDBFetchable
     private var disposables = Set<AnyCancellable>()
     private var gameIndex = 0
     private let gamesInRow = 3
+    private var accessToken = ""
     
-    init(steamFetcher: SteamFetchable, scheduler: DispatchQueue = DispatchQueue(label: "GamesViewModel")) {
+    init(steamFetcher: SteamFetchable, igdbFetcher: IGDBFetchable, scheduler: DispatchQueue = DispatchQueue(label: "GamesViewModel")) {
         self.steamFetcher = steamFetcher
+        self.igdbFetcher = igdbFetcher
         
         fetchAllGames()
     }
@@ -44,7 +47,9 @@ class GamesViewModel: ObservableObject, Identifiable {
             .map { response in
                 response.response.games.map {
                     MainModel.GameCell.init(id: $0.appid, name: $0.name,
-                                            hoursPlayed: $0.playtimeForever.toHoursAndMinutes(), background: "https://steamcdn-a.akamaihd.net/steam/apps/\($0.appid)/library_600x900.jpg")
+                                            hoursPlayed: $0.playtimeForever.toHoursAndMinutes(),
+                                            background: "https://steamcdn-a.akamaihd.net/steam/apps/\($0.appid)/library_600x900.jpg",
+                                            backupBackground: "")
                 }
             }
             .receive(on: DispatchQueue.main)
@@ -63,4 +68,42 @@ class GamesViewModel: ObservableObject, Identifiable {
             })
             .store(in: &disposables)
     }
+    
+    func getTwitchToken() {
+        igdbFetcher.getTwitchToken()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] value in
+                guard let self = self else { return }
+                switch value {
+                case .failure:
+                    self.accessToken = ""
+                case .finished:
+                  break
+                }
+            }, receiveValue: { [weak self] forecast in
+                guard let self = self else { return }
+                self.accessToken = forecast.accessToken
+                self.getGameCovers()
+            })
+            .store(in: &disposables)
+    }
+    
+    func getGameCovers() {
+        igdbFetcher.getGameCovers(accessToken: accessToken, gameIds: [""])
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { value in
+                switch value {
+                case .failure:
+                    print(value)
+                case .finished:
+                  break
+                }
+            }, receiveValue: { [weak self] forecast in
+                guard let self = self else { return }
+                
+            })
+            .store(in: &disposables)
+    }
+    
+//    func
 }

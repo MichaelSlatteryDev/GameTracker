@@ -40,6 +40,6 @@ struct GameRow: View {
 
 struct GamesView_Previews: PreviewProvider {
     static var previews: some View {
-        GamesView(gamesViewModel: GamesViewModel(steamFetcher: SteamFetcher()))
+        GamesView(gamesViewModel: GamesViewModel(steamFetcher: SteamFetcher(), igdbFetcher: IGDBFetcher()))
     }
 }

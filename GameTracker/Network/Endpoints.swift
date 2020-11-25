@@ -21,7 +21,9 @@ enum Endpoints {
     case getTwitchToken
     
     //IGDB
+    case getIGDBGames
     case getIGDBCover
+    case getIGDBImage
     
     func path() -> String {
         switch (self) {
@@ -31,7 +33,9 @@ enum Endpoints {
         case .getPlayerAchievements: return "/ISteamUserStats/GetPlayerAchievements/v0001/"
         case .getUserStatsForGame: return "/ISteamUserStats/GetUserStatsForGame/v0002/"
         case .getTwitchToken: return "/oauth2/token"
+        case .getIGDBGames: return "/v4/games/"
         case .getIGDBCover: return "/v4/covers"
+        case .getIGDBImage: return "/igdb/image/upload/t_cover_big/"
         }
     }
 }

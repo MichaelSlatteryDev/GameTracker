@@ -24,6 +24,8 @@
 		76065F01256C124100D59352 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76065F00256C124100D59352 /* Endpoints.swift */; };
 		76065F09256C159200D59352 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76065F08256C159200D59352 /* Fetcher.swift */; };
 		76065F13256C228800D59352 /* GetTwitchTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76065F12256C228800D59352 /* GetTwitchTokenResponse.swift */; };
+		76065F1B256ECBF800D59352 /* GameCoverResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76065F1A256ECBF800D59352 /* GameCoverResponse.swift */; };
+		76065F20256ECE4C00D59352 /* GameResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76065F1F256ECE4C00D59352 /* GameResponse.swift */; };
 		760C37B525695BDF002855CF /* GamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C37B425695BDF002855CF /* GamesView.swift */; };
 		760C37BD25696241002855CF /* GamesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C37BC25696241002855CF /* GamesViewModel.swift */; };
 		760C37C3256962FA002855CF /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760C37C2256962FA002855CF /* IntExtension.swift */; };
@@ -88,6 +90,8 @@
 		76065F00256C124100D59352 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		76065F08256C159200D59352 /* Fetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
 		76065F12256C228800D59352 /* GetTwitchTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTwitchTokenResponse.swift; sourceTree = "<group>"; };
+		76065F1A256ECBF800D59352 /* GameCoverResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoverResponse.swift; sourceTree = "<group>"; };
+		76065F1F256ECE4C00D59352 /* GameResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResponse.swift; sourceTree = "<group>"; };
 		760C37B425695BDF002855CF /* GamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesView.swift; sourceTree = "<group>"; };
 		760C37BC25696241002855CF /* GamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewModel.swift; sourceTree = "<group>"; };
 		760C37C2256962FA002855CF /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
@@ -263,6 +267,8 @@
 			isa = PBXGroup;
 			children = (
 				76065F12256C228800D59352 /* GetTwitchTokenResponse.swift */,
+				76065F1A256ECBF800D59352 /* GameCoverResponse.swift */,
+				76065F1F256ECE4C00D59352 /* GameResponse.swift */,
 			);
 			path = IGDBResponses;
 			sourceTree = "<group>";
@@ -602,8 +608,10 @@
 				76791B2625479EF90007A53C /* User.swift in Sources */,
 				04361FE924F303ED00544C10 /* MainView.swift in Sources */,
 				760C37BD25696241002855CF /* GamesViewModel.swift in Sources */,
+				76065F1B256ECBF800D59352 /* GameCoverResponse.swift in Sources */,
 				76661A90256406BC000EDD25 /* BaseView.swift in Sources */,
 				76FEBBFF2540E1DF0062EA67 /* LoginView.swift in Sources */,
+				76065F20256ECE4C00D59352 /* GameResponse.swift in Sources */,
 				76065F01256C124100D59352 /* Endpoints.swift in Sources */,
 				04259906250ED5E100F22A77 /* NetworkError.swift in Sources */,
 			);

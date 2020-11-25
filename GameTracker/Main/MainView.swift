@@ -32,7 +32,7 @@ struct MainView: View {
                     .padding()
                     HStack {
                         Spacer()
-                        NavigationLink(destination: GamesView(gamesViewModel: GamesViewModel(steamFetcher: SteamFetcher())), isActive: $showAllGames) {
+                        NavigationLink(destination: GamesView(gamesViewModel: GamesViewModel(steamFetcher: SteamFetcher(), igdbFetcher: IGDBFetcher())), isActive: $showAllGames) {
                             GameTrackerButton(image: "gamecontroller.fill", action: {
                                 print("Access Library")
                                 showAllGames = true
@@ -96,12 +96,13 @@ struct GameCell: View {
 }
 
 struct GameCellPortrait: View {
-    var cellData: MainModel.GameCell
+    @State var cellData: MainModel.GameCell
     
     var body: some View {
         WebImage(url: URL(string: cellData.background))
             .onFailure(perform: { error in
                 print(error)
+                cellData.background = cellData.backupBackground
             })
             .resizable()
             .indicator(.activity)

@@ -11,7 +11,8 @@ import Combine
 
 protocol IGDBFetchable {
     func getTwitchToken() -> AnyPublisher<TwitchTokenResponse, NetworkError>
-    func getGameCover(accessToken: String) -> AnyPublisher<TwitchTokenResponse, NetworkError>
+    func getGameCovers(accessToken: String, gameIds: [String]) -> AnyPublisher<[GameCoverResponse], NetworkError>
+    func getGameImageURL(imageId: String) -> URL?
 }
 
 class IGDBFetcher: Fetcher {
@@ -43,9 +44,10 @@ class IGDBFetcher: Fetcher {
         static let host = "id.twitch.tv"
     }
     
-    struct IGDBAPI {
+    struct IGDB {
         static let scheme = "https"
-        static let host = "api.igdb.com"
+        static let apiHost = "api.igdb.com"
+        static let imageHost = "images.igdb.com"
     }
     
     private func makeGetTwitchToken() -> URLComponents {
@@ -63,14 +65,22 @@ class IGDBFetcher: Fetcher {
         return components
     }
     
-    private func makeaGetGameCover() -> URLComponents {
-        return makeBaseURLComponents(path: Endpoints.getIGDBCover.path())
+    private func makeGetGames() -> URLComponents {
+        return makeBaseURLComponents(host: IGDB.apiHost, path: Endpoints.getIGDBGames.path())
     }
     
-    private func makeBaseURLComponents(path: String) -> URLComponents {
+    private func makeGetGameCover() -> URLComponents {
+        return makeBaseURLComponents(host: IGDB.apiHost, path: Endpoints.getIGDBCover.path())
+    }
+    
+    private func makeGetGameImage() -> URLComponents {
+        return makeBaseURLComponents(host: IGDB.imageHost, path: Endpoints.getIGDBImage.path())
+    }
+    
+    private func makeBaseURLComponents(host: String, path: String) -> URLComponents {
         var components = URLComponents()
-        components.scheme = IGDBAPI.scheme
-        components.host = IGDBAPI.host
+        components.scheme = IGDB.scheme
+        components.host = host
         components.path = path
         
         return components
@@ -79,18 +89,27 @@ class IGDBFetcher: Fetcher {
 }
 
 extension IGDBFetcher: IGDBFetchable {
+    
     func getTwitchToken() -> AnyPublisher<TwitchTokenResponse, NetworkError> {
         return fetchData(with: makeGetTwitchToken())
     }
     
-    func getGameCover(accessToken: String) -> AnyPublisher<TwitchTokenResponse, NetworkError> {
-        guard let url = makeaGetGameCover().url else {
+    func getGames() -> AnyPublisher<[GameResponse], NetworkError> {
+        return fetchData(with: makeGetGames())
+    }
+    
+    func getGameCovers(accessToken: String, gameIds: [String]) -> AnyPublisher<[GameCoverResponse], NetworkError> {
+        guard let url = makeGetGameCover().url else {
             let error = NetworkError.url(description: "Couldn't create URL")
             return Fail(error: error).eraseToAnyPublisher()
         }
         
-        let request = makeURLRequest(with: url, accessToken: accessToken, fields: "fields alpha_channel,animated,checksum,game,height,image_id,url,width;")
+        let request = makeURLRequest(with: url, accessToken: accessToken, fields: "fields *; where game = \(gameIds)")
         return fetchData(with: request)
+    }
+    
+    func getGameImageURL(imageId: String) -> URL? {
+        return makeGetGameImage().url?.appendingPathComponent(imageId)
     }
     
     private func makeURLRequest(with url: URL, accessToken: String, fields httpBody: String = "") -> URLRequest {
