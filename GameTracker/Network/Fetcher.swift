@@ -32,13 +32,16 @@ class Fetcher {
             .eraseToAnyPublisher()
     }
     
-    internal func fetchData<T>(with components: URLComponents) -> AnyPublisher<T, NetworkError> where T: Decodable {
+    internal func fetchData<T>(with components: URLComponents, httpMethod: String = "GET") -> AnyPublisher<T, NetworkError> where T: Decodable {
         guard let url = components.url else {
             let error = NetworkError.url(description: "Couldn't create URL")
             return Fail(error: error).eraseToAnyPublisher()
         }
         
-        return session.dataTaskPublisher(for: URLRequest(url: url))
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod
+        
+        return session.dataTaskPublisher(for: request)
             .mapError { error in
                 .url(description: error.localizedDescription)
             }.flatMap { pair in

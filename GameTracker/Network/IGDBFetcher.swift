@@ -11,7 +11,8 @@ import Combine
 
 protocol IGDBFetchable {
     func getTwitchToken() -> AnyPublisher<TwitchTokenResponse, NetworkError>
-    func getGameCovers(accessToken: String, gameIds: [String]) -> AnyPublisher<[GameCoverResponse], NetworkError>
+    func getGames(accessToken: String, name: String) -> AnyPublisher<[GameResponse], NetworkError>
+    func getGameCover(accessToken: String, gameId: Int) -> AnyPublisher<[GameCoverResponse], NetworkError>
     func getGameImageURL(imageId: String) -> URL?
 }
 
@@ -56,11 +57,11 @@ class IGDBFetcher: Fetcher {
         components.host = TwitchAPI.host
         components.path = Endpoints.getTwitchToken.path()
         
-        components.queryItems?.append(contentsOf: [
-            URLQueryItem(name: "client-id", value: clientId),
+        components.queryItems = [
+            URLQueryItem(name: "client_id", value: clientId),
             URLQueryItem(name: "client_secret", value: clientSecret),
             URLQueryItem(name: "grant_type", value: "client_credentials")
-        ])
+        ]
         
         return components
     }
@@ -91,20 +92,26 @@ class IGDBFetcher: Fetcher {
 extension IGDBFetcher: IGDBFetchable {
     
     func getTwitchToken() -> AnyPublisher<TwitchTokenResponse, NetworkError> {
-        return fetchData(with: makeGetTwitchToken())
+        return fetchData(with: makeGetTwitchToken(), httpMethod: "POST")
     }
     
-    func getGames() -> AnyPublisher<[GameResponse], NetworkError> {
-        return fetchData(with: makeGetGames())
+    func getGames(accessToken: String, name: String) -> AnyPublisher<[GameResponse], NetworkError> {
+        guard let url = makeGetGames().url else {
+            let error = NetworkError.url(description: "Couldn't create URL")
+            return Fail(error: error).eraseToAnyPublisher()
+        }
+        
+        let request = makeURLRequest(with: url, accessToken: accessToken, query: "search \(name); fields name;")
+        return fetchData(with: request)
     }
     
-    func getGameCovers(accessToken: String, gameIds: [String]) -> AnyPublisher<[GameCoverResponse], NetworkError> {
+    func getGameCover(accessToken: String, gameId: Int) -> AnyPublisher<[GameCoverResponse], NetworkError> {
         guard let url = makeGetGameCover().url else {
             let error = NetworkError.url(description: "Couldn't create URL")
             return Fail(error: error).eraseToAnyPublisher()
         }
         
-        let request = makeURLRequest(with: url, accessToken: accessToken, fields: "fields *; where game = \(gameIds)")
+        let request = makeURLRequest(with: url, accessToken: accessToken, query: "fields *; where game = \(gameId)")
         return fetchData(with: request)
     }
     
@@ -112,7 +119,7 @@ extension IGDBFetcher: IGDBFetchable {
         return makeGetGameImage().url?.appendingPathComponent(imageId)
     }
     
-    private func makeURLRequest(with url: URL, accessToken: String, fields httpBody: String = "") -> URLRequest {
+    private func makeURLRequest(with url: URL, accessToken: String, query httpBody: String = "") -> URLRequest {
         var requestHeader = URLRequest(url: url)
         requestHeader.httpBody = httpBody.data(using: .utf8, allowLossyConversion: false)
         requestHeader.httpMethod = "POST"

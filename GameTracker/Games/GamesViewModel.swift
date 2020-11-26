@@ -26,6 +26,7 @@ class GamesViewModel: ObservableObject, Identifiable {
         self.igdbFetcher = igdbFetcher
         
         fetchAllGames()
+        getTwitchToken()
     }
     
     func allGamesSeperated() -> Array<MainModel.GameCell> {
@@ -48,8 +49,7 @@ class GamesViewModel: ObservableObject, Identifiable {
                 response.response.games.map {
                     MainModel.GameCell.init(id: $0.appid, name: $0.name,
                                             hoursPlayed: $0.playtimeForever.toHoursAndMinutes(),
-                                            background: "https://steamcdn-a.akamaihd.net/steam/apps/\($0.appid)/library_600x900.jpg",
-                                            backupBackground: "")
+                                            background: "https://steamcdn-a.akamaihd.net/steam/apps/\($0.appid)/library_600x900.jpg")
                 }
             }
             .receive(on: DispatchQueue.main)
@@ -71,7 +71,7 @@ class GamesViewModel: ObservableObject, Identifiable {
     
     func getTwitchToken() {
         igdbFetcher.getTwitchToken()
-            .receive(on: DispatchQueue.main)
+            .receive(on: DispatchQueue.global())
             .sink(receiveCompletion: { [weak self] value in
                 guard let self = self else { return }
                 switch value {
@@ -83,13 +83,12 @@ class GamesViewModel: ObservableObject, Identifiable {
             }, receiveValue: { [weak self] forecast in
                 guard let self = self else { return }
                 self.accessToken = forecast.accessToken
-                self.getGameCovers()
             })
             .store(in: &disposables)
     }
     
-    func getGameCovers() {
-        igdbFetcher.getGameCovers(accessToken: accessToken, gameIds: [""])
+    func getIGDBGames(name: String) {
+        igdbFetcher.getGames(accessToken: accessToken, name: name)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { value in
                 switch value {
@@ -99,11 +98,35 @@ class GamesViewModel: ObservableObject, Identifiable {
                   break
                 }
             }, receiveValue: { [weak self] forecast in
-                guard let self = self else { return }
-                
+                guard let self = self, let game = forecast.first else { return }
+                if let index = self.allGames.firstIndex(where: { $0.name == game.name }) {
+                    var updatedCell = self.allGames[index]
+                    updatedCell.igdbId = game.id
+                    self.allGames[index] = updatedCell
+                }
+                self.getGameCover(gameId: game.id)
             })
             .store(in: &disposables)
     }
     
-//    func
+    func getGameCover(gameId: Int) {
+        igdbFetcher.getGameCover(accessToken: accessToken, gameId: gameId)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { value in
+                switch value {
+                case .failure:
+                    print(value)
+                case .finished:
+                  break
+                }
+            }, receiveValue: { [weak self] forecast in
+                guard let self = self, let cover = forecast.first else { return }
+                if let index = self.allGames.firstIndex(where: { $0.igdbId == cover.game }) {
+                    var updatedCell = self.allGames[index]
+                    updatedCell.background = "https://images.igdb.com/igdb/image/upload/t_cover_big/\(cover.imageId).jpg"
+                    self.allGames[index] = updatedCell
+                }
+            })
+            .store(in: &disposables)
+    }
 }

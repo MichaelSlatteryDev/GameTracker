@@ -86,23 +86,31 @@ struct GameTrackerButton: View {
 struct GameCell: View {
     var cellData: MainModel.GameCell
     var view: MainModel.GameCellView
+    var errorHandler: ((String) -> ())?
      
     var body: some View {
         switch (view) {
         case .main: GameCellLandscape(cellData: cellData)
-        case .games: GameCellPortrait(cellData: cellData)
+        case .games: GameCellPortrait(cellData: cellData, errorHandler: errorHandler)
         }
     }
 }
 
 struct GameCellPortrait: View {
     @State var cellData: MainModel.GameCell
+    var errorHandler: ((String) -> ())?
     
     var body: some View {
         WebImage(url: URL(string: cellData.background))
-            .onFailure(perform: { error in
-                print(error)
-                cellData.background = cellData.backupBackground
+//            .onFailure(perform: { error in
+//                print(error)
+//                if let errorHandler = errorHandler {
+//                    errorHandler(cellData.name)
+//                }
+////                cellData.background = cellData.backupBackground
+//            })
+            .onSuccess(perform: { _ in
+                print(cellData.name)
             })
             .resizable()
             .indicator(.activity)

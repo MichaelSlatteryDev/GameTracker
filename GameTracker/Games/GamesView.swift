@@ -18,7 +18,7 @@ struct GamesView: View {
             ScrollView {
                 LazyVStack {
                     ForEach(gamesViewModel.allGamesSeperated()) { _ in
-                        GameRow(games: gamesViewModel.allGamesSubList())
+                        GameRow(games: gamesViewModel.allGamesSubList(), errorHandler: gamesViewModel.getIGDBGames(name:))
                     }
                 }
             }
@@ -28,11 +28,12 @@ struct GamesView: View {
 
 struct GameRow: View {
     var games: [MainModel.GameCell] = []
+    var errorHandler: ((String) -> ())?
     
     var body: some View {
         LazyHStack {
             ForEach(games) { game in
-                GameCell(cellData: game, view: .games)
+                GameCell(cellData: game, view: .games, errorHandler: errorHandler)
             }
         }
     }

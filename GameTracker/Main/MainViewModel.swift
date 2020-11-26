@@ -36,8 +36,7 @@ class MainViewModel: ObservableObject, Identifiable {
                 response.response.games.map {
                     MainModel.GameCell.init(id: $0.appid, name: $0.name,
                                             hoursPlayed: $0.playtimeForever.toHoursAndMinutes(),
-                                            background: "https://steamcdn-a.akamaihd.net/steam/apps/\($0.appid)/library_hero.jpg",
-                                            backupBackground: "")
+                                            background: "https://steamcdn-a.akamaihd.net/steam/apps/\($0.appid)/library_hero.jpg")
                 }
             }
             .receive(on: DispatchQueue.main)

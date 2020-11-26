@@ -16,10 +16,10 @@ struct MainModel {
     
     struct GameCell: Identifiable {
         var id: Int
+        var igdbId: Int = -1
         var name: String
         var hoursPlayed: String
         var background: String
-        var backupBackground: String
         var completedAchievements: Int?
         var totalAchievements: Int?
     }
