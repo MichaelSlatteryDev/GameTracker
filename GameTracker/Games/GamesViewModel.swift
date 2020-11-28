@@ -25,11 +25,13 @@ class GamesViewModel: ObservableObject, Identifiable {
         self.steamFetcher = steamFetcher
         self.igdbFetcher = igdbFetcher
         
-        fetchAllGames()
         getTwitchToken()
+//        fetchAllGames()
     }
     
+    // Get the first game in each row
     func allGamesSeperated() -> Array<MainModel.GameCell> {
+        reset()
         let filteredGames = allGames.enumerated().filter{ $0.offset % gamesInRow == 0 }.map{ $0.element }
         return filteredGames
     }
@@ -41,6 +43,10 @@ class GamesViewModel: ObservableObject, Identifiable {
         } else {
             return Array(allGames[gameIndex..<allGames.count])
         }
+    }
+    
+    func reset() {
+        gameIndex = 0
     }
     
     func fetchAllGames() {
@@ -64,14 +70,14 @@ class GamesViewModel: ObservableObject, Identifiable {
             }, receiveValue: { [weak self] forecast in
                 guard let self = self else { return }
                 let sortedGame = forecast.sorted { $0.name.lowercased() < $1.name.lowercased() }
-                self.allGames = sortedGame
+                self.allGames = Array(sortedGame)
             })
             .store(in: &disposables)
     }
     
     func getTwitchToken() {
         igdbFetcher.getTwitchToken()
-            .receive(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] value in
                 guard let self = self else { return }
                 switch value {

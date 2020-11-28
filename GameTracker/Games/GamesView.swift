@@ -22,6 +22,8 @@ struct GamesView: View {
                     }
                 }
             }
+        }.onAppear {
+            gamesViewModel.fetchAllGames()
         }
     }
 }

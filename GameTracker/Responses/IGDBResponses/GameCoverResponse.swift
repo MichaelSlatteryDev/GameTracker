@@ -9,7 +9,7 @@
 import Foundation
 
 struct GameCoverResponse: Codable {
-    let id: String
+    let id: Int
     let alphaChannel: Bool
     let animated: Bool
     let game: Int

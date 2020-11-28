@@ -101,7 +101,11 @@ extension IGDBFetcher: IGDBFetchable {
             return Fail(error: error).eraseToAnyPublisher()
         }
         
-        let request = makeURLRequest(with: url, accessToken: accessToken, query: "search \(name); fields name;")
+        let query = "search \"\(name)\"; fields name;"
+        
+        print(query)
+        
+        let request = makeURLRequest(with: url, accessToken: accessToken, query: query)
         return fetchData(with: request)
     }
     
@@ -111,7 +115,7 @@ extension IGDBFetcher: IGDBFetchable {
             return Fail(error: error).eraseToAnyPublisher()
         }
         
-        let request = makeURLRequest(with: url, accessToken: accessToken, query: "fields *; where game = \(gameId)")
+        let request = makeURLRequest(with: url, accessToken: accessToken, query: "fields *; where game = \(gameId);")
         return fetchData(with: request)
     }
     

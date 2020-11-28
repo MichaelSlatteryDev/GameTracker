@@ -17,6 +17,7 @@ struct MainView: View {
     
     @StateObject
     var mainViewModel: MainViewModel
+    let gamesViewModel = GamesViewModel(steamFetcher: SteamFetcher(), igdbFetcher: IGDBFetcher())
     
     @State var showAllGames = false
     
@@ -32,7 +33,7 @@ struct MainView: View {
                     .padding()
                     HStack {
                         Spacer()
-                        NavigationLink(destination: GamesView(gamesViewModel: GamesViewModel(steamFetcher: SteamFetcher(), igdbFetcher: IGDBFetcher())), isActive: $showAllGames) {
+                        NavigationLink(destination: GamesView(gamesViewModel: gamesViewModel), isActive: $showAllGames) {
                             GameTrackerButton(image: "gamecontroller.fill", action: {
                                 print("Access Library")
                                 showAllGames = true
@@ -97,18 +98,18 @@ struct GameCell: View {
 }
 
 struct GameCellPortrait: View {
-    @State var cellData: MainModel.GameCell
+    var cellData: MainModel.GameCell
     var errorHandler: ((String) -> ())?
     
     var body: some View {
         WebImage(url: URL(string: cellData.background))
-//            .onFailure(perform: { error in
-//                print(error)
-//                if let errorHandler = errorHandler {
-//                    errorHandler(cellData.name)
-//                }
-////                cellData.background = cellData.backupBackground
-//            })
+            .onFailure(perform: { error in
+                print(error)
+                if let errorHandler = errorHandler {
+                    errorHandler(cellData.name)
+                }
+//                cellData.background = cellData.backupBackground
+            })
             .onSuccess(perform: { _ in
                 print(cellData.name)
             })
