@@ -17,36 +17,15 @@ class GamesViewModel: ObservableObject, Identifiable {
     private let steamFetcher: SteamFetchable
     private let igdbFetcher: IGDBFetchable
     private var disposables = Set<AnyCancellable>()
-    private var gameIndex = 0
     private let gamesInRow = 3
     private var accessToken = ""
+    let semaphore = DispatchSemaphore(value: 4)
     
     init(steamFetcher: SteamFetchable, igdbFetcher: IGDBFetchable, scheduler: DispatchQueue = DispatchQueue(label: "GamesViewModel")) {
         self.steamFetcher = steamFetcher
         self.igdbFetcher = igdbFetcher
         
         getTwitchToken()
-//        fetchAllGames()
-    }
-    
-    // Get the first game in each row
-    func allGamesSeperated() -> Array<MainModel.GameCell> {
-        reset()
-        let filteredGames = allGames.enumerated().filter{ $0.offset % gamesInRow == 0 }.map{ $0.element }
-        return filteredGames
-    }
-    
-    func allGamesSubList() -> Array<MainModel.GameCell> {
-        if gameIndex + gamesInRow < allGames.count {
-            gameIndex += gamesInRow
-            return Array(allGames[gameIndex-gamesInRow..<gameIndex])
-        } else {
-            return Array(allGames[gameIndex..<allGames.count])
-        }
-    }
-    
-    func reset() {
-        gameIndex = 0
     }
     
     func fetchAllGames() {
@@ -94,6 +73,9 @@ class GamesViewModel: ObservableObject, Identifiable {
     }
     
     func getIGDBGames(name: String) {
+        DispatchQueue.global().async {
+            self.semaphore.wait()
+        }
         igdbFetcher.getGames(accessToken: accessToken, name: name)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { value in
@@ -101,7 +83,10 @@ class GamesViewModel: ObservableObject, Identifiable {
                 case .failure:
                     print(value)
                 case .finished:
-                  break
+                    DispatchQueue.global().async{
+                        self.semaphore.signal()
+                    }
+                    break
                 }
             }, receiveValue: { [weak self] forecast in
                 guard let self = self, let game = forecast.first else { return }
@@ -109,13 +94,16 @@ class GamesViewModel: ObservableObject, Identifiable {
                     var updatedCell = self.allGames[index]
                     updatedCell.igdbId = game.id
                     self.allGames[index] = updatedCell
+                    self.getGameCover(gameId: game.id)
                 }
-                self.getGameCover(gameId: game.id)
             })
             .store(in: &disposables)
     }
     
     func getGameCover(gameId: Int) {
+        DispatchQueue.global().async {
+            self.semaphore.wait()
+        }
         igdbFetcher.getGameCover(accessToken: accessToken, gameId: gameId)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { value in
@@ -123,7 +111,10 @@ class GamesViewModel: ObservableObject, Identifiable {
                 case .failure:
                     print(value)
                 case .finished:
-                  break
+                    DispatchQueue.global().async {
+                        self.semaphore.signal()
+                    }
+                    break
                 }
             }, receiveValue: { [weak self] forecast in
                 guard let self = self, let cover = forecast.first else { return }

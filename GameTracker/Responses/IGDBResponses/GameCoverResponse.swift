@@ -10,8 +10,8 @@ import Foundation
 
 struct GameCoverResponse: Codable {
     let id: Int
-    let alphaChannel: Bool
-    let animated: Bool
+    let alphaChannel: Bool?
+    let animated: Bool?
     let game: Int
     let height: Int
     let imageId: String

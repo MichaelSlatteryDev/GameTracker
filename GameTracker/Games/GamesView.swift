@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import QGrid
 
 struct GamesView: View {
     
@@ -15,13 +16,17 @@ struct GamesView: View {
     
     var body: some View {
         BaseView {
-            ScrollView {
-                LazyVStack {
-                    ForEach(gamesViewModel.allGamesSeperated()) { _ in
-                        GameRow(games: gamesViewModel.allGamesSubList(), errorHandler: gamesViewModel.getIGDBGames(name:))
-                    }
-                }
+            QGrid(gamesViewModel.allGames, columns: 3) { game in
+                GameCell(cellData: game, view: .games, errorHandler: gamesViewModel.getIGDBGames(name:))
             }
+//            ScrollView {
+//                LazyHStack {
+//                    ForEach(gamesViewModel.allGames) { game in
+//                        GameCell(cellData: game, view: .games, errorHandler: gamesViewModel.getIGDBGames(name:))
+//                    }
+////                        GameRow(games: gamesViewModel.allGamesSubList(), errorHandler: gamesViewModel.getIGDBGames(name:))
+//                }
+//            }
         }.onAppear {
             gamesViewModel.fetchAllGames()
         }
