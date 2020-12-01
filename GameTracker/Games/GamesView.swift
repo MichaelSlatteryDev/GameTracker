@@ -17,31 +17,10 @@ struct GamesView: View {
     var body: some View {
         BaseView {
             QGrid(gamesViewModel.allGames, columns: 3) { game in
-                GameCell(cellData: game, view: .games, errorHandler: gamesViewModel.getIGDBGames(name:))
+                GameCell(cellData: game, view: .games, errorHandler: gamesViewModel.getIGDBGames(name: completion:))
             }
-//            ScrollView {
-//                LazyHStack {
-//                    ForEach(gamesViewModel.allGames) { game in
-//                        GameCell(cellData: game, view: .games, errorHandler: gamesViewModel.getIGDBGames(name:))
-//                    }
-////                        GameRow(games: gamesViewModel.allGamesSubList(), errorHandler: gamesViewModel.getIGDBGames(name:))
-//                }
-//            }
         }.onAppear {
             gamesViewModel.fetchAllGames()
-        }
-    }
-}
-
-struct GameRow: View {
-    var games: [MainModel.GameCell] = []
-    var errorHandler: ((String) -> ())?
-    
-    var body: some View {
-        LazyHStack {
-            ForEach(games) { game in
-                GameCell(cellData: game, view: .games, errorHandler: errorHandler)
-            }
         }
     }
 }

@@ -815,8 +815,8 @@
             filePath = "GameTracker/Main/MainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -831,8 +831,8 @@
             filePath = "GameTracker/Main/MainView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -851,39 +851,6 @@
             endingLineNumber = "108"
             landmarkName = "getGames(accessToken:name:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E8A916F3-2AFD-4BD5-AEDE-BECD50ABF0B1"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GameTracker/Main/MainView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7CEBE564-D170-484D-B9B7-1499730E5D6E"
-            shouldBeEnabled = "Yes"
-            condition = "cellData.igdbId == 23354"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GameTracker/Main/MainView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "body"
-            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -962,7 +929,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "84"
             endingLineNumber = "84"
-            landmarkName = "getIGDBGames(name:)"
+            landmarkName = "getIGDBGames(name:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -976,9 +943,9 @@
             filePath = "GameTracker/Games/GamesViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
-            landmarkName = "getIGDBGames(name:)"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "getIGDBGames(name:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -994,7 +961,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "79"
             endingLineNumber = "79"
-            landmarkName = "getIGDBGames(name:)"
+            landmarkName = "getIGDBGames(name:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1026,73 +993,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "107"
             endingLineNumber = "107"
-            landmarkName = "getGameCover(gameId:)"
+            landmarkName = "getGameCover(gameId:cellIndex:completion:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "EF470FA8-3C47-4A85-8A9D-3DB7404F86BB"
-            shouldBeEnabled = "No"
-            condition = "cover.imageId == &quot;co1mym&quot;"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GameTracker/Games/GamesViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
-            landmarkName = "getGameCover(gameId:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "EF470FA8-3C47-4A85-8A9D-3DB7404F86BB - bbf0a2da61d95775"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 (Swift.Array&lt;GameTracker.GameCoverResponse&gt;) -&gt; () in GameTracker.GamesViewModel.getGameCover(gameId: Swift.Int) -&gt; ()"
-                  moduleName = "GameTracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/michaelslattery/Desktop/GameTracker/GameTracker/Games/GamesViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "144"
-                  endingLineNumber = "144"
-                  offsetFromSymbolStart = "952">
-               </Location>
-               <Location
-                  uuid = "EF470FA8-3C47-4A85-8A9D-3DB7404F86BB - 13befb29d3e6737"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (GameTracker.MainModel.GameCell) -&gt; Swift.Bool in closure #3 (Swift.Array&lt;GameTracker.GameCoverResponse&gt;) -&gt; () in GameTracker.GamesViewModel.getGameCover(gameId: Swift.Int) -&gt; ()"
-                  moduleName = "GameTracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/michaelslattery/Desktop/GameTracker/GameTracker/Games/GamesViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "144"
-                  endingLineNumber = "144"
-                  offsetFromSymbolStart = "28">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4D120ABB-4426-43DA-8D5D-B45FA5F7C4F2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GameTracker/Games/GamesView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "body"
-            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1121,9 +1023,9 @@
             filePath = "GameTracker/Games/GamesViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "getIGDBGames(name:)"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "getIGDBGames(name:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -1157,6 +1059,22 @@
                   offsetFromSymbolStart = "47">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EAEA0C15-A0DC-4E03-89D9-37A9F0D9300F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GameTracker/Games/GamesViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "getGameCover(gameId:cellIndex:completion:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

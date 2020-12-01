@@ -19,7 +19,7 @@ class GamesViewModel: ObservableObject, Identifiable {
     private var disposables = Set<AnyCancellable>()
     private let gamesInRow = 3
     private var accessToken = ""
-    let semaphore = DispatchSemaphore(value: 4)
+    let dispatchGroup = DispatchGroup()
     
     init(steamFetcher: SteamFetchable, igdbFetcher: IGDBFetchable, scheduler: DispatchQueue = DispatchQueue(label: "GamesViewModel")) {
         self.steamFetcher = steamFetcher
@@ -72,9 +72,9 @@ class GamesViewModel: ObservableObject, Identifiable {
             .store(in: &disposables)
     }
     
-    func getIGDBGames(name: String) {
+    func getIGDBGames(name: String, completion: @escaping (Bool) -> ()) {
         DispatchQueue.global().async {
-            self.semaphore.wait()
+            self.dispatchGroup.enter()
         }
         igdbFetcher.getGames(accessToken: accessToken, name: name)
             .receive(on: DispatchQueue.main)
@@ -82,27 +82,27 @@ class GamesViewModel: ObservableObject, Identifiable {
                 switch value {
                 case .failure:
                     print(value)
+                    completion(false)
                 case .finished:
                     DispatchQueue.global().async{
-                        self.semaphore.signal()
+                        self.dispatchGroup.leave()
                     }
                     break
                 }
             }, receiveValue: { [weak self] forecast in
                 guard let self = self, let game = forecast.first else { return }
                 if let index = self.allGames.firstIndex(where: { $0.name == game.name }) {
-                    var updatedCell = self.allGames[index]
-                    updatedCell.igdbId = game.id
-                    self.allGames[index] = updatedCell
-                    self.getGameCover(gameId: game.id)
+                    self.getGameCover(gameId: game.id, cellIndex: index, completion: completion)
+                } else {
+                    completion(false)
                 }
             })
             .store(in: &disposables)
     }
     
-    func getGameCover(gameId: Int) {
+    func getGameCover(gameId: Int, cellIndex: Int, completion: @escaping  (Bool) -> ()) {
         DispatchQueue.global().async {
-            self.semaphore.wait()
+            self.dispatchGroup.enter()
         }
         igdbFetcher.getGameCover(accessToken: accessToken, gameId: gameId)
             .receive(on: DispatchQueue.main)
@@ -110,19 +110,23 @@ class GamesViewModel: ObservableObject, Identifiable {
                 switch value {
                 case .failure:
                     print(value)
+                    completion(false)
                 case .finished:
                     DispatchQueue.global().async {
-                        self.semaphore.signal()
+                        self.dispatchGroup.leave()
                     }
                     break
                 }
             }, receiveValue: { [weak self] forecast in
-                guard let self = self, let cover = forecast.first else { return }
-                if let index = self.allGames.firstIndex(where: { $0.igdbId == cover.game }) {
-                    var updatedCell = self.allGames[index]
-                    updatedCell.background = "https://images.igdb.com/igdb/image/upload/t_cover_big/\(cover.imageId).jpg"
-                    self.allGames[index] = updatedCell
+                guard let self = self, let cover = forecast.first else {
+                    completion(false)
+                    return
                 }
+                var updatedCell = self.allGames[cellIndex]
+                updatedCell.igdbId = cover.game
+                updatedCell.background = "https://images.igdb.com/igdb/image/upload/t_cover_big/\(cover.imageId).jpg"
+                self.allGames[cellIndex] = updatedCell
+                completion(true)
             })
             .store(in: &disposables)
     }

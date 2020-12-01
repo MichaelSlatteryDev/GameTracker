@@ -87,7 +87,7 @@ struct GameTrackerButton: View {
 struct GameCell: View {
     var cellData: MainModel.GameCell
     var view: MainModel.GameCellView
-    var errorHandler: ((String) -> ())?
+    var errorHandler: ((String, @escaping (Bool) -> ()) -> ())?
      
     var body: some View {
         switch (view) {
@@ -98,25 +98,28 @@ struct GameCell: View {
 }
 
 struct GameCellPortrait: View {
+    @State var hasCover: Bool = true
     var cellData: MainModel.GameCell
-    var errorHandler: ((String) -> ())?
+    var errorHandler: ((String, @escaping (Bool) -> ()) -> ())?
     
     var body: some View {
-        WebImage(url: URL(string: cellData.background))
-            .onFailure(perform: { error in
-                print(error)
-                if let errorHandler = errorHandler {
-                    errorHandler(cellData.name)
-                }
-//                cellData.background = cellData.backupBackground
-            })
-            .onSuccess(perform: { _ in
-                print(cellData.name)
-            })
-            .resizable()
-            .indicator(.activity)
-            .frame(width: 100, height: 150, alignment: .center)
-//            .scaledToFit()
+        if (hasCover) {
+            WebImage(url: URL(string: cellData.background))
+                .onFailure(perform: { error in
+                    if let errorHandler = errorHandler {
+                        errorHandler(cellData.name, { result in
+                            hasCover = result
+                        })
+                    }
+                })
+                .resizable()
+                .indicator(.activity)
+                .frame(width: 100, height: 150, alignment: .center)
+    //            .scaledToFit()
+        } else {
+            EmptyGameCell(cellData: cellData)
+                .frame(width: 100, height: 150, alignment: .center)
+        }
     }
 }
 
@@ -157,6 +160,17 @@ struct GameCellLandscape: View {
             }
         }
         .buttonStyle(PlainButtonStyle())
+    }
+}
+
+struct EmptyGameCell: View {
+    var cellData: MainModel.GameCell
+    
+    var body: some View {
+        BaseView {
+            Text(cellData.name)
+                .foregroundColor(.white)
+        }
     }
 }
 
