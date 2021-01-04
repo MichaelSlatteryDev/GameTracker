@@ -19,14 +19,20 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             BaseView {
-                NavigationLink(destination: MainView(mainViewModel: MainViewModel(steamFetcher: SteamFetcher())), isActive: $loginViewModel.successfulLogin) {
-                    Button(action: {
-                        self.showSafari = true
-                    }) {
-                        Image("steam_login")
+                VStack {
+                    NavigationLink(destination: MainView(mainViewModel: MainViewModel(steamFetcher: SteamFetcher())), isActive: $loginViewModel.successfulLogin) {
+                        Button(action: {
+                            self.showSafari = true
+                        }) {
+                            Image("steam_login")
+                        }
+                        .sheet(isPresented: $showSafari) {
+                            SafariView(handler: loginViewModel.handler)
+                        }
                     }
-                    .sheet(isPresented: $showSafari) {
-                        SafariView(handler: loginViewModel.handler)
+                    
+                    NavigationLink(destination: SignUpView(signUpViewModel: SignUpViewModel(gameTrackerFetcher: GameTrackerFetcher()))) {
+                        Text("Sign Up")
                     }
                 }
             }

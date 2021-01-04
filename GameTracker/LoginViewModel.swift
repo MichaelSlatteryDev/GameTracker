@@ -13,7 +13,8 @@ import KeychainAccess
 
 class LoginViewModel: ObservableObject, Identifiable {
     
-    private let steamFetcher: SteamFetchable
+    private var gameTrackerFetcher: GameTrackerFetcher? = nil
+    private var steamFetcher: SteamFetchable? = nil
     private var disposables = Set<AnyCancellable>()
     private let keychain = Keychain(service: "com.michaelslattery.GameTracker")
     
@@ -33,7 +34,13 @@ class LoginViewModel: ObservableObject, Identifiable {
         self.steamFetcher = steamFetcher
     }
     
-    func getPlayerSummary(steamId: String) {
+    init(gameTrackerFetcher: GameTrackerFetcher) {
+        self.gameTrackerFetcher = gameTrackerFetcher
+    }
+    
+    private func getPlayerSummary(steamId: String) {
+        guard let steamFetcher = steamFetcher else { return }
+        
         steamFetcher.getPlayerSummary(steamId: steamId)
             .map { response in
                 response.response.players

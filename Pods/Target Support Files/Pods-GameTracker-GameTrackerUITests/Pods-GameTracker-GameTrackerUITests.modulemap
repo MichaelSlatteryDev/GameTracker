@@ -1,6 +1,0 @@
-framework module Pods_GameTracker_GameTrackerUITests {
-  umbrella header "Pods-GameTracker-GameTrackerUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}

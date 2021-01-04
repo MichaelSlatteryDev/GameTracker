@@ -1,6 +1,0 @@
-framework module SteamLogin {
-  umbrella header "SteamLogin-umbrella.h"
-
-  export *
-  module * { export * }
-}

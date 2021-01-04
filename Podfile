@@ -10,6 +10,8 @@ target 'GameTracker' do
   pod 'SDWebImageSwiftUI'
   pod 'SteamLogin'
   pod 'KeychainAccess'
+  pod 'Amplify'
+  pod 'AmplifyPlugins/AWSCognitoAuthPlugin'
 
   target 'GameTrackerTests' do
     inherit! :search_paths

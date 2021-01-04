@@ -17,7 +17,8 @@ class MainViewModel: ObservableObject, Identifiable {
     @Published
     var recentGames: [MainModel.GameCell] = []
     
-    private let steamFetcher: SteamFetchable
+    private var gameTrackerFetcher: GameTrackerFetcher? = nil
+    private var steamFetcher: SteamFetchable? = nil
     private var disposables = Set<AnyCancellable>()
     
     init(steamFetcher: SteamFetchable, scheduler: DispatchQueue = DispatchQueue(label: "MainViewModel")) {
@@ -26,11 +27,17 @@ class MainViewModel: ObservableObject, Identifiable {
         fetchRecentGames()
     }
     
+    init(gameTrackerFetcher: GameTrackerFetcher, scheduler: DispatchQueue = DispatchQueue(label: "MainViewModel")) {
+        self.gameTrackerFetcher = gameTrackerFetcher
+    }
+    
     func mostRecent() -> Array<MainModel.GameCell> {
         return recentGames
     }
     
     func fetchRecentGames() {
+        guard let steamFetcher = steamFetcher else { return }
+        
         steamFetcher.getRecentlyPlayedGames()
             .map { response in
                 response.response.games.map {
@@ -57,6 +64,8 @@ class MainViewModel: ObservableObject, Identifiable {
     }
     
     func fetchAchievments(games: [MainModel.GameCell]) {
+        guard let steamFetcher = steamFetcher else { return }
+        
         for game in games {
             steamFetcher.getPlayerAchievments(gameId: String(game.id))
                 .map { response in

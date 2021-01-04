@@ -1,4 +1,29 @@
 PODS:
+  - Amplify (1.5.2):
+    - Amplify/Default (= 1.5.2)
+  - Amplify/Default (1.5.2)
+  - AmplifyPlugins/AWSCognitoAuthPlugin (1.5.2):
+    - AWSAuthCore (~> 2.21.0)
+    - AWSCognitoIdentityProvider (~> 2.21.0)
+    - AWSCognitoIdentityProviderASF (~> 2.21.0)
+    - AWSCore (~> 2.21.0)
+    - AWSMobileClient (~> 2.21.0)
+    - AWSPluginsCore (= 1.5.2)
+  - AWSAuthCore (2.21.1):
+    - AWSCore (= 2.21.1)
+  - AWSCognitoIdentityProvider (2.21.1):
+    - AWSCognitoIdentityProviderASF (= 2.21.1)
+    - AWSCore (= 2.21.1)
+  - AWSCognitoIdentityProviderASF (2.21.1)
+  - AWSCore (2.21.1)
+  - AWSMobileClient (2.21.1):
+    - AWSAuthCore (= 2.21.1)
+    - AWSCognitoIdentityProvider (= 2.21.1)
+    - AWSCognitoIdentityProviderASF (= 2.21.1)
+    - AWSCore (= 2.21.1)
+  - AWSPluginsCore (1.5.2):
+    - Amplify (= 1.5.2)
+    - AWSCore (~> 2.21.0)
   - KeychainAccess (4.2.1)
   - SDWebImage (5.9.5):
     - SDWebImage/Core (= 5.9.5)
@@ -10,23 +35,41 @@ PODS:
   - SteamLogin/Login (0.1.4)
 
 DEPENDENCIES:
+  - Amplify
+  - AmplifyPlugins/AWSCognitoAuthPlugin
   - KeychainAccess
   - SDWebImageSwiftUI
   - SteamLogin
 
 SPEC REPOS:
   trunk:
+    - Amplify
+    - AmplifyPlugins
+    - AWSAuthCore
+    - AWSCognitoIdentityProvider
+    - AWSCognitoIdentityProviderASF
+    - AWSCore
+    - AWSMobileClient
+    - AWSPluginsCore
     - KeychainAccess
     - SDWebImage
     - SDWebImageSwiftUI
     - SteamLogin
 
 SPEC CHECKSUMS:
+  Amplify: ab6311e55abba45613c3990e8233b5ffa965d556
+  AmplifyPlugins: 91abe3ca8af4337147e98655f6e603d398784f7a
+  AWSAuthCore: 0c8f99de21a92134f052fb38c579f977e269b0c8
+  AWSCognitoIdentityProvider: 6ac90a6833bfabd22c80863a96240ab9098186f4
+  AWSCognitoIdentityProviderASF: 318df44cc620dc401a04a94e57107b2af316c50e
+  AWSCore: a855a41cb2d43c8b538d3a80f8e855ed947f3d3c
+  AWSMobileClient: 21f4e54eb90a7bcab22e7cb22fd6043b8c6f93e1
+  AWSPluginsCore: 58fbe8752faffd4a3d94799d942ebb6f3bf96fe9
   KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
   SDWebImage: 0b2ba0d56479bf6a45ecddbfd5558bea93150d25
   SDWebImageSwiftUI: 43687ffe232ddd33fe0659498b7ca9884fdd6b35
   SteamLogin: 86eee7733cfaa417242671524f39561b0c22700c
 
-PODFILE CHECKSUM: db76eed358d3ad0773d91c510a48299d02e3553f
+PODFILE CHECKSUM: 9c49bffa26d05d2b3c2189ea2bb7bdf305d5128d
 
 COCOAPODS: 1.10.0

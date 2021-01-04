@@ -9,6 +9,7 @@
 import SwiftUI
 import Combine
 import KeychainAccess
+import Amplify
 
 class SplashViewModel: ObservableObject, Identifiable {
     
@@ -17,7 +18,7 @@ class SplashViewModel: ObservableObject, Identifiable {
     private let keychain = Keychain(service: "com.michaelslattery.GameTracker")
     
     @Published
-    var savedCredentials: Bool
+    var savedCredentials: Bool = false
     
     @Published
     var successfulLogin: Bool = false
@@ -25,12 +26,29 @@ class SplashViewModel: ObservableObject, Identifiable {
     init(steamFetcher: SteamFetchable) {
         self.steamFetcher = steamFetcher
         
-        if let steamId = keychain["steamId"] {
-            savedCredentials = true
-            getPlayerSummary(steamId: steamId)
-        } else {
-           savedCredentials = false
-        }
+//        MARK: Amplify Login
+        self.fetchCurrentAuthSession()
+            .store(in: &disposables)
+        
+//        MARK: Steam Login
+//        if let steamId = keychain["steamId"] {
+//            savedCredentials = true
+//            getPlayerSummary(steamId: steamId)
+//        } else {
+//           savedCredentials = false
+//        }
+    }
+    
+    func fetchCurrentAuthSession() -> AnyCancellable {
+        Amplify.Auth.fetchAuthSession().resultPublisher
+        .sink(receiveCompletion: { recievedValue in
+            if case let .failure(authError) = recievedValue {
+                print("Fetch session failed with error \(authError)")
+            }
+        },
+        receiveValue: { session in
+            print("Is user signed in - \(session.isSignedIn)")
+        })
     }
     
     func getPlayerSummary(steamId: String) {
