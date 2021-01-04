@@ -16,7 +16,7 @@ struct GamesView: View {
     
     var body: some View {
         BaseView {
-            QGrid(gamesViewModel.allGames, columns: 3) { game in
+            QGrid(gamesViewModel.allGames, columns: 3, columnsInLandscape: 5) { game in
                 GameCell(cellData: game, view: .games, errorHandler: gamesViewModel.getIGDBGames(name: completion:))
             }
         }.onAppear {
