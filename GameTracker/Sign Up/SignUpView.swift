@@ -13,28 +13,42 @@ struct SignUpView: View {
     @StateObject
     var signUpViewModel: SignUpViewModel
     
-    @State private var username: String = ""
-    @State private var password: String = ""
-    @State private var email: String = ""
+    @StateObject
+    var signUpModel: SignUpModel
+    
+    @State private var isSaveDisabled: Bool = true
     
     var body: some View {
         BaseView {
             VStack {
-                BaseTextField("Username", text: $username, type: .username)
-                BaseTextField("Pasword", text: $password, type: .password)
-                BaseTextField("Email", text: $email, type: .emailAddress)
+                BaseTextField("Username", text: $signUpModel.username, type: .username)
+                    .validation(signUpModel.usernameValidation)
+                BaseTextField("Pasword", text: $signUpModel.password, type: .password)
+                    .validation(signUpModel.passwordValidation)
+                BaseTextField("Email", text: $signUpModel.email, type: .emailAddress)
+                    .validation(signUpModel.emailValidation)
                 Button(action: {
-                    signUpViewModel.signUp(username: username, password: password, email: email)
+                    signUpViewModel.signUp(username: signUpModel.username, password: signUpModel.password, email: signUpModel.email)
                 }, label: {
                     Text("Sign Up")
                 })
+                .disabled(isSaveDisabled)
             }
         }
+        .onReceive(signUpModel.allValidation) { validation in
+            isSaveDisabled = !validation.isSuccess
+        }
+    }
+}
+
+extension View {
+    func validation(_ validationPublisher: ValidationPublisher) -> some View {
+        self.modifier(ValidationModifier(validationPublisher: validationPublisher))
     }
 }
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(signUpViewModel: SignUpViewModel(gameTrackerFetcher: GameTrackerFetcher()))
+        SignUpView(signUpViewModel: SignUpViewModel(gameTrackerFetcher: GameTrackerFetcher()), signUpModel: SignUpModel())
     }
 }

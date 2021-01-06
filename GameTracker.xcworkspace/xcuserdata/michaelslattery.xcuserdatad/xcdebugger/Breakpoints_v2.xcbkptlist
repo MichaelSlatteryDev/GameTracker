@@ -1061,5 +1061,101 @@
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B586854-ED41-4509-8463-85B8B80A4825"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GameTracker/Sign Up/SignUpModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "emailValidation"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2A461CBC-C01E-4FBB-9F06-AA24900EB5E0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GameTracker/Sign Up/ValidationPublishers.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "validationMessage"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8496691A-DD86-451F-BE4E-0930699B9B35"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GameTracker/Sign Up/ValidationPublishers.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "emailValidation(for:errorMessage:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0B1F47D9-83C9-4632-B9A0-6D4CF6656FB4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GameTracker/Sign Up/ValidationPublishers.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "emailValidation(for:errorMessage:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0B1F47D9-83C9-4632-B9A0-6D4CF6656FB4 - ded3ffcf242f87a3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static GameTracker.ValidationPublishers.emailValidation(for: Combine.Published&lt;Swift.String&gt;.Publisher, errorMessage: @autoclosure () -&gt; Swift.String) -&gt; Combine.AnyPublisher&lt;GameTracker.Validation, Swift.Never&gt;"
+                  moduleName = "GameTracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/michaelslattery/Desktop/GameTracker/GameTracker/Sign%20Up/ValidationPublishers.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "252">
+               </Location>
+               <Location
+                  uuid = "0B1F47D9-83C9-4632-B9A0-6D4CF6656FB4 - 298f31601e3845d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String) -&gt; GameTracker.Validation in static GameTracker.ValidationPublishers.emailValidation(for: Combine.Published&lt;Swift.String&gt;.Publisher, errorMessage: @autoclosure () -&gt; Swift.String) -&gt; Combine.AnyPublisher&lt;GameTracker.Validation, Swift.Never&gt;"
+                  moduleName = "GameTracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/michaelslattery/Desktop/GameTracker/GameTracker/Sign%20Up/ValidationPublishers.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "112">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
