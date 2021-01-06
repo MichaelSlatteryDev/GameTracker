@@ -20,21 +20,9 @@ struct SignUpView: View {
     var body: some View {
         BaseView {
             VStack {
-                TextField("Username", text: $username)
-                    .textContentType(.username)
-                    .accentColor(.black)
-                    .padding(.init(top: 0, leading: 15, bottom:0 , trailing: 15))
-                    .textFieldStyle(RoundedBorderTextFieldStyle.init())
-                SecureField("Pasword", text: $password)
-                    .textContentType(.password)
-                    .accentColor(.black)
-                    .padding(.init(top: 0, leading: 15, bottom:0 , trailing: 15))
-                    .textFieldStyle(RoundedBorderTextFieldStyle.init())
-                TextField("Email", text: $email)
-                    .textContentType(.emailAddress)
-                    .accentColor(.black)
-                    .padding(.init(top: 0, leading: 15, bottom:0 , trailing: 15))
-                    .textFieldStyle(RoundedBorderTextFieldStyle.init())
+                BaseTextField("Username", text: $username, type: .username)
+                BaseTextField("Pasword", text: $password, type: .password)
+                BaseTextField("Email", text: $email, type: .emailAddress)
                 Button(action: {
                     signUpViewModel.signUp(username: username, password: password, email: email)
                 }, label: {

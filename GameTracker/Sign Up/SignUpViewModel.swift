@@ -19,7 +19,6 @@ class SignUpViewModel: ObservableObject, Identifiable {
     }
     
     func signUp(username: String, password: String, email: String) {
-        
         gameTrackerFetcher.signUp(username: username, password: password, email: email)
             .resultPublisher
             .sink {
