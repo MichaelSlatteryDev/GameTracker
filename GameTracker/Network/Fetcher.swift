@@ -22,7 +22,7 @@ class Fetcher {
         decoder.dateDecodingStrategy = .secondsSince1970
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        print(String(data: data, encoding: .utf8))
+//        print(String(data: data, encoding: .utf8))
 
         return Just(data)
             .decode(type: T.self, decoder: decoder)

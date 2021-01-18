@@ -8,6 +8,8 @@
 
 import Combine
 
+// This is a class instead of a struct so it can implement ObservableObject. It implements ObservableObject because each
+// value need to be published so the UI can be updated.
 class SignUpModel: ObservableObject {
     
     @Published var username: String = ""

@@ -17,16 +17,19 @@ class MainViewModel: ObservableObject, Identifiable {
     @Published
     var recentGames: [MainModel.GameCell] = []
     
+    // Make var becuase can be nil depending on init used
     private var gameTrackerFetcher: GameTrackerFetcher? = nil
     private var steamFetcher: SteamFetchable? = nil
     private var disposables = Set<AnyCancellable>()
     
+    // Steam Init
     init(steamFetcher: SteamFetchable, scheduler: DispatchQueue = DispatchQueue(label: "MainViewModel")) {
         self.steamFetcher = steamFetcher
         
         fetchRecentGames()
     }
     
+    // IGDB Init
     init(gameTrackerFetcher: GameTrackerFetcher, scheduler: DispatchQueue = DispatchQueue(label: "MainViewModel")) {
         self.gameTrackerFetcher = gameTrackerFetcher
     }

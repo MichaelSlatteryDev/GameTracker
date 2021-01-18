@@ -11,11 +11,15 @@ import Combine
 
 class SignUpViewModel: ObservableObject, Identifiable {
     
+    // @Published
+    var signUpModel: SignUpModel
+    
     private let gameTrackerFetcher: GameTrackerFetcher
     private var disposables = Set<AnyCancellable>()
     
-    init(gameTrackerFetcher: GameTrackerFetcher) {
+    init(gameTrackerFetcher: GameTrackerFetcher, signUpModel: SignUpModel) {
         self.gameTrackerFetcher = gameTrackerFetcher
+        self.signUpModel = signUpModel
     }
     
     func signUp(username: String, password: String, email: String) {

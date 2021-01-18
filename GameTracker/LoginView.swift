@@ -31,7 +31,14 @@ struct LoginView: View {
                         }
                     }
                     
-                    NavigationLink(destination: SignUpView(signUpViewModel: SignUpViewModel(gameTrackerFetcher: GameTrackerFetcher()), signUpModel: SignUpModel())) {
+                    NavigationLink(
+                        destination: SignUpView(
+                            signUpViewModel: SignUpViewModel(
+                                gameTrackerFetcher: GameTrackerFetcher(),
+                                signUpModel: SignUpModel()
+                            )
+                        )
+                    ) {
                         Text("Sign Up")
                     }
                 }

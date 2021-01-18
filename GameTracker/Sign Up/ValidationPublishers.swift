@@ -59,31 +59,3 @@ extension Published.Publisher where Value == String {
         return ValidationPublishers.emailValidation(for: self, errorMessage: errorMessage())
     }
 }
-
-struct ValidationModifier: ViewModifier {
-    @State var latestValidation: Validation = .success
-    
-    let validationPublisher: ValidationPublisher
-    
-    func body(content: Content) -> some View {
-        return VStack(alignment: .leading) {
-            content
-            validationMessage
-        }.onReceive(validationPublisher) { validation in
-            self.latestValidation = validation
-        }
-    }
-    
-    var validationMessage: some View {
-        switch latestValidation {
-        case .success:
-            return AnyView(EmptyView())
-        case .failure(let message):
-            let text = Text(message)
-                .foregroundColor(Color.red)
-                .font(.caption)
-                .padding(.init(top: 0, leading: 15, bottom:0 , trailing: 15))
-            return AnyView(text)
-        }
-    }
-}

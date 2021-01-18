@@ -41,6 +41,9 @@
 		76791B2025479E270007A53C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76791B1F25479E270007A53C /* LoginViewModel.swift */; };
 		76791B2625479EF90007A53C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76791B2525479EF90007A53C /* User.swift */; };
 		76791B2E2547AC3F0007A53C /* GetPlayerSummariesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76791B2D2547AC3F0007A53C /* GetPlayerSummariesResponse.swift */; };
+		7689FD8825B5D63100679B97 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7689FD8725B5D63100679B97 /* VerificationView.swift */; };
+		7689FD9025B5D97F00679B97 /* VerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7689FD8F25B5D97F00679B97 /* VerificationViewModel.swift */; };
+		7689FD9525B5DA5400679B97 /* VerificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7689FD9425B5DA5400679B97 /* VerificationModel.swift */; };
 		76ACBC372562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ACBC362562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift */; };
 		76AFDEC225750FDD00339756 /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 76AFDEC125750FDD00339756 /* QGrid */; };
 		76D40E4825A5F6CA001D27F3 /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D40E4725A5F6CA001D27F3 /* BaseTextField.swift */; };
@@ -118,6 +121,9 @@
 		76791B1F25479E270007A53C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		76791B2525479EF90007A53C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		76791B2D2547AC3F0007A53C /* GetPlayerSummariesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlayerSummariesResponse.swift; sourceTree = "<group>"; };
+		7689FD8725B5D63100679B97 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
+		7689FD8F25B5D97F00679B97 /* VerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModel.swift; sourceTree = "<group>"; };
+		7689FD9425B5DA5400679B97 /* VerificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationModel.swift; sourceTree = "<group>"; };
 		76ACBC362562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlayerAchievementsResponse.swift; sourceTree = "<group>"; };
 		76D40E4725A5F6CA001D27F3 /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
 		76D40E5425A60700001D27F3 /* ValidationPublishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationPublishers.swift; sourceTree = "<group>"; };
@@ -205,6 +211,7 @@
 		04361FE324F303ED00544C10 /* GameTracker */ = {
 			isa = PBXGroup;
 			children = (
+				7689FD8625B5D61E00679B97 /* Verification */,
 				7610E35A25A380A000417A7E /* Sign Up */,
 				760C37C1256962EB002855CF /* Extensions */,
 				760C37B325695BCE002855CF /* Games */,
@@ -362,6 +369,16 @@
 				76791B2525479EF90007A53C /* User.swift */,
 			);
 			path = Singletons;
+			sourceTree = "<group>";
+		};
+		7689FD8625B5D61E00679B97 /* Verification */ = {
+			isa = PBXGroup;
+			children = (
+				7689FD8725B5D63100679B97 /* VerificationView.swift */,
+				7689FD8F25B5D97F00679B97 /* VerificationViewModel.swift */,
+				7689FD9425B5DA5400679B97 /* VerificationModel.swift */,
+			);
+			path = Verification;
 			sourceTree = "<group>";
 		};
 		76FEBBFD2540E1CE0062EA67 /* Login */ = {
@@ -646,10 +663,12 @@
 				76FF416F253F7B5900E2DAE5 /* GetRecentlyPlayedGamesResponse.swift in Sources */,
 				760C37B525695BDF002855CF /* GamesView.swift in Sources */,
 				04259900250ECEF700F22A77 /* SteamFetcher.swift in Sources */,
+				7689FD9525B5DA5400679B97 /* VerificationModel.swift in Sources */,
 				760F4F222566BF1700158E02 /* SplashView.swift in Sources */,
 				760C37C3256962FA002855CF /* IntExtension.swift in Sources */,
 				760F4F2D2566BFDA00158E02 /* SplashViewModel.swift in Sources */,
 				76791B2025479E270007A53C /* LoginViewModel.swift in Sources */,
+				7689FD9025B5D97F00679B97 /* VerificationViewModel.swift in Sources */,
 				7610E36125A3813A00417A7E /* SignUpViewModel.swift in Sources */,
 				76065F09256C159200D59352 /* Fetcher.swift in Sources */,
 				7610E34425A37A8200417A7E /* GameTrackerFetcher.swift in Sources */,
@@ -657,6 +676,7 @@
 				76065EFC256C120800D59352 /* IGDBFetcher.swift in Sources */,
 				04259903250ECFC200F22A77 /* GetOwnedGamesResponse.swift in Sources */,
 				76791B2E2547AC3F0007A53C /* GetPlayerSummariesResponse.swift in Sources */,
+				7689FD8825B5D63100679B97 /* VerificationView.swift in Sources */,
 				76661A9825640B6F000EDD25 /* ProgressBar.swift in Sources */,
 				76ACBC372562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift in Sources */,
 				7610E35C25A380B800417A7E /* SignUpView.swift in Sources */,
