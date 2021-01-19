@@ -14,6 +14,9 @@ class SignUpViewModel: ObservableObject, Identifiable {
     // @Published
     var signUpModel: SignUpModel
     
+    @Published
+    var successfulSignUp: Bool = false
+    
     private let gameTrackerFetcher: GameTrackerFetcher
     private var disposables = Set<AnyCancellable>()
     
@@ -30,11 +33,15 @@ class SignUpViewModel: ObservableObject, Identifiable {
                     print("An error occurred while registering a user \(authError)")
                 }
             }
-            receiveValue: { signUpResult in
+            receiveValue: { [weak self] signUpResult in
+                guard let self = self else { return }
                 if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
                     print("Delivery details \(String(describing: deliveryDetails))")
                 } else {
                     print("SignUp Complete")
+                }
+                DispatchQueue.main.async {
+                    self.successfulSignUp = true
                 }
             }
             .store(in: &disposables)

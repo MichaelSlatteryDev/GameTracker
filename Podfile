@@ -12,6 +12,7 @@ target 'GameTracker' do
   pod 'KeychainAccess'
   pod 'Amplify'
   pod 'AmplifyPlugins/AWSCognitoAuthPlugin'
+  pod "Introspect"
 
   target 'GameTrackerTests' do
     inherit! :search_paths

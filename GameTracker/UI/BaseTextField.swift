@@ -13,11 +13,13 @@ struct BaseTextField: View {
     var titleKey: LocalizedStringKey
     var text: Binding<String>
     var textContentType: UITextContentType
+    var isActive: Bool
     
-    init(_ titleKey: LocalizedStringKey, text: Binding<String>, type textContentType: UITextContentType) {
+    init(_ titleKey: LocalizedStringKey, text: Binding<String>, type textContentType: UITextContentType, isActive: Bool = false) {
         self.titleKey = titleKey
         self.text = text
         self.textContentType = textContentType
+        self.isActive = isActive
     }
     
     var body: some View {
@@ -28,6 +30,11 @@ struct BaseTextField: View {
                 .autocapitalization(.none)
                 .padding(.init(top: 0, leading: 15, bottom:0 , trailing: 15))
                 .textFieldStyle(RoundedBorderTextFieldStyle.init())
+                .introspectTextField  { textField in
+                    if isActive && textField.text == "" {
+                        textField.becomeFirstResponder()
+                    }
+                }
         default:
             TextField(titleKey, text: text)
                 .textContentType(textContentType)
@@ -35,6 +42,11 @@ struct BaseTextField: View {
                 .autocapitalization(.none)
                 .padding(.init(top: 0, leading: 15, bottom:0 , trailing: 15))
                 .textFieldStyle(RoundedBorderTextFieldStyle.init())
+                .introspectTextField  { textField in
+                    if isActive && textField.text == "" {
+                        textField.becomeFirstResponder()
+                    }
+                }
         }
     }
 }

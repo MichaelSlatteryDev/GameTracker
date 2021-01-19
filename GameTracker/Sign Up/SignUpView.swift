@@ -24,14 +24,23 @@ struct SignUpView: View {
                     .validation(signUpViewModel.signUpModel.passwordValidation)
                 BaseTextField("Email", text: $signUpViewModel.signUpModel.email, type: .emailAddress)
                     .validation(signUpViewModel.signUpModel.emailValidation)
-                Button(action: {
-                    signUpViewModel.signUp(username: signUpViewModel.signUpModel.username,
-                                           password: signUpViewModel.signUpModel.password,
-                                           email: signUpViewModel.signUpModel.email)
-                }, label: {
-                    Text("Sign Up")
-                })
-                .disabled(isSaveDisabled)
+                
+                NavigationLink(
+                    destination: VerificationView(
+                        verificationViewModel: VerificationViewModel(
+                            gameTrackerFetcher: GameTrackerFetcher(),
+                            username: signUpViewModel.signUpModel.username)),
+                    isActive: $signUpViewModel.successfulSignUp
+                ) {
+                    Button(action: {
+                        signUpViewModel.signUp(username: signUpViewModel.signUpModel.username,
+                                               password: signUpViewModel.signUpModel.password,
+                                               email: signUpViewModel.signUpModel.email)
+                    }, label: {
+                        Text("Sign Up")
+                    })
+                    .disabled(isSaveDisabled)
+                }
             }
         }
         .onReceive(signUpViewModel.signUpModel.allValidation) { validation in
