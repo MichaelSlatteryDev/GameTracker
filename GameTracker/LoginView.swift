@@ -20,6 +20,16 @@ struct LoginView: View {
         NavigationView {
             BaseView {
                 VStack {
+                    BaseTextField("Username", text: $loginViewModel.loginModel.username, type: .username)
+                    BaseTextField("Password", text: $loginViewModel.loginModel.password, type: .username)
+                    NavigationLink(destination: MainView(mainViewModel: MainViewModel(steamFetcher: SteamFetcher())), isActive: $loginViewModel.successfulLogin) {
+                        Button(action: {
+                            loginViewModel.signIn()
+                        }) {
+                            Text("Sign In")
+                        }
+                    }
+                    Divider()
                     NavigationLink(destination: MainView(mainViewModel: MainViewModel(steamFetcher: SteamFetcher())), isActive: $loginViewModel.successfulLogin) {
                         Button(action: {
                             self.showSafari = true

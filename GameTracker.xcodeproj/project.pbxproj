@@ -44,6 +44,7 @@
 		7689FD8825B5D63100679B97 /* VerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7689FD8725B5D63100679B97 /* VerificationView.swift */; };
 		7689FD9025B5D97F00679B97 /* VerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7689FD8F25B5D97F00679B97 /* VerificationViewModel.swift */; };
 		7689FD9525B5DA5400679B97 /* VerificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7689FD9425B5DA5400679B97 /* VerificationModel.swift */; };
+		7689FDAD25B7367100679B97 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7689FDAC25B7367100679B97 /* LoginModel.swift */; };
 		76ACBC372562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ACBC362562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift */; };
 		76AFDEC225750FDD00339756 /* QGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 76AFDEC125750FDD00339756 /* QGrid */; };
 		76D40E4825A5F6CA001D27F3 /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D40E4725A5F6CA001D27F3 /* BaseTextField.swift */; };
@@ -124,6 +125,7 @@
 		7689FD8725B5D63100679B97 /* VerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationView.swift; sourceTree = "<group>"; };
 		7689FD8F25B5D97F00679B97 /* VerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModel.swift; sourceTree = "<group>"; };
 		7689FD9425B5DA5400679B97 /* VerificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationModel.swift; sourceTree = "<group>"; };
+		7689FDAC25B7367100679B97 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		76ACBC362562BC4B00AF6C2B /* GetPlayerAchievementsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlayerAchievementsResponse.swift; sourceTree = "<group>"; };
 		76D40E4725A5F6CA001D27F3 /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
 		76D40E5425A60700001D27F3 /* ValidationPublishers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationPublishers.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 			children = (
 				76FEBBFE2540E1DF0062EA67 /* LoginView.swift */,
 				76791B1F25479E270007A53C /* LoginViewModel.swift */,
+				7689FDAC25B7367100679B97 /* LoginModel.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -693,6 +696,7 @@
 				76065F1B256ECBF800D59352 /* GameCoverResponse.swift in Sources */,
 				76661A90256406BC000EDD25 /* BaseView.swift in Sources */,
 				76FEBBFF2540E1DF0062EA67 /* LoginView.swift in Sources */,
+				7689FDAD25B7367100679B97 /* LoginModel.swift in Sources */,
 				76065F20256ECE4C00D59352 /* GameResponse.swift in Sources */,
 				76065F01256C124100D59352 /* Endpoints.swift in Sources */,
 				04259906250ED5E100F22A77 /* NetworkError.swift in Sources */,

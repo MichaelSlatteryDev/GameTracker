@@ -10,16 +10,20 @@ import SwiftUI
 import SteamLogin
 import Combine
 import KeychainAccess
+import Amplify
 
 class LoginViewModel: ObservableObject, Identifiable {
+    
+    @Published
+    var loginModel: LoginModel = LoginModel()
+    
+    @Published
+    var successfulLogin: Bool = false
     
     private var gameTrackerFetcher: GameTrackerFetcher? = nil
     private var steamFetcher: SteamFetchable? = nil
     private var disposables = Set<AnyCancellable>()
     private let keychain = Keychain(service: "com.michaelslattery.GameTracker")
-    
-    @Published
-    var successfulLogin: Bool = false
     
     lazy var handler: SteamLoginVCHandler = { [weak self] user, error in
         if let self = self, let user = user, let steamId = user.steamID64 {
@@ -36,6 +40,24 @@ class LoginViewModel: ObservableObject, Identifiable {
     
     init(gameTrackerFetcher: GameTrackerFetcher) {
         self.gameTrackerFetcher = gameTrackerFetcher
+    }
+    
+    func signIn() {
+        Amplify.Auth.signIn(username: loginModel.username, password: loginModel.password)
+            .resultPublisher
+            .receive(on: DispatchQueue.main)
+            .sink {
+                if case let .failure(authError) = $0 {
+                    print("Sign in failed \(authError)")
+                }
+            }
+            receiveValue: { [weak self] value in
+                guard let self = self else { return }
+                print("Sign in succeeded")
+                User.shared.updateUserInfo(username: self.loginModel.username, firstName: "", lastName: "")
+                self.successfulLogin = true
+            }
+            .store(in: &disposables)
     }
     
     private func getPlayerSummary(steamId: String) {
